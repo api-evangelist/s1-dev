@@ -1,0 +1,110 @@
+generated: '2026-10-07'
+method: searched
+source: https://s1.dev/pricing.md
+sources:
+- https://s1.dev/pricing.md
+- https://s1.dev/pricing
+name: Search1API pricing
+audience: developer-api
+pricing_basis: tiered-subscription
+published: true
+currency: USD
+plan_count: 4
+delivery:
+  delivery: managed
+  method: page
+  read: '2026-10-07'
+  managed_tier: Basic
+note: 'Credit-based: every endpoint costs a fixed number of credits (1 for /search, 5 for /ask, 20 for /deepcrawl
+  ...); subscriptions grant a monthly allowance, top-ups are prepaid and never expire. Prices quoted verbatim from
+  the agent-readable pricing.md.'
+credit_costs:
+- endpoint: /search
+  credits: 1
+- endpoint: /ask
+  credits: 5
+- endpoint: /news
+  credits: 1
+- endpoint: /crawl
+  credits: 1
+- endpoint: /screenshot
+  credits: 2
+- endpoint: /sitemap
+  credits: 1
+- endpoint: /trending
+  credits: 1
+- endpoint: /deepcrawl
+  credits: 20
+- endpoint: /extract
+  credits: 10
+- endpoint: /search, /news with crawl_results
+  credits: 1 + n
+topup:
+  text: Top up any amount from $5 to $2000. The base rate is $1 = 1,000 credits; larger top-ups earn a bonus on
+    the whole amount. Top-up credits never expire.
+  tiers:
+  - amount_text: $19
+    credits: 19,950
+    bonus: +5%
+  - amount_text: $99
+    credits: 118,800
+    bonus: +20%
+  - amount_text: $499
+    credits: 798,400
+    bonus: +60%
+plans:
+- name: Free
+  price_text: $0
+  price: 0
+  currency: USD
+  period: none
+  description: All Features, Lower API Concurrency, Partial Technical Support
+  features:
+  - All Features
+  - Lower API Concurrency
+  - Partial Technical Support
+  limits:
+  - name: credits
+    limit_text: 100 credits
+- name: Basic
+  price_text: $19/month
+  price: 19
+  currency: USD
+  period: month
+  yearly_price_text: $190/year ($15.83/month, list $228)
+  description: All Features, Standard API Concurrency, Email and Community Support
+  features:
+  - All Features
+  - Standard API Concurrency
+  - Email and Community Support
+  limits:
+  - name: credits
+    limit_text: 25,000 credits per month
+- name: Professional
+  price_text: $99/month
+  price: 99
+  currency: USD
+  period: month
+  yearly_price_text: $990/year ($82.50/month, list $1,188)
+  description: All Features, Higher API Concurrency, Priority Service Support
+  features:
+  - All Features
+  - Higher API Concurrency
+  - Priority Service Support
+  limits:
+  - name: credits
+    limit_text: 150,000 credits per month
+- name: Enterprise
+  price_text: $499/month
+  price: 499
+  currency: USD
+  period: month
+  yearly_price_text: $4,990/year ($415.83/month, list $5,988)
+  description: All Features, Search, Crawl Customization, 24/7 Priority Service Support
+  features:
+  - All Features
+  - Search, Crawl Customization
+  - 24/7 Priority Service Support
+  limits:
+  - name: credits
+    limit_text: 1,000,000 credits per month

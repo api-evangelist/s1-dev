@@ -1,0 +1,56 @@
+generated: '2026-10-07'
+method: searched
+source: https://s1.dev/docs/integrations/cli; https://raw.githubusercontent.com/superagents-lab/search1api-cli/master/README.md
+description: 's1, the first-party Search1API CLI: OAuth 2.1 login (dynamic client registration + PKCE), web/news
+  search, page crawl, sitemap, trending, balance, and s1 learn which turns a URL into an installable Agent Skill.
+  Prints JSON with --json for scripting.'
+docs: https://s1.dev/docs/integrations/cli
+repo: https://github.com/superagents-lab/search1api-cli
+install:
+  script: curl -fsSL https://cli.search1api.com/install.sh | bash
+  npm: npm install -g search1api-cli
+commands:
+  auth_config:
+  - name: login
+    description: Authorize with OAuth 2.1 in the browser (dynamic registration, Authorization Code + PKCE S256);
+      --no-browser prints the URL.
+  - name: config set-key | show
+    description: Manage configuration; set-key stores an API key fallback, show reports the active credential source.
+  - name: update
+    description: Update s1 in place.
+  search:
+  - name: search "<query>"
+    description: Search the web (POST /search).
+    flags:
+    - -n/--max-results 1-50 (default 10)
+    - -s/--service engine (default google)
+    - -c/--crawl N crawl the top N results for full text
+    - --include/--exclude sites
+    - -t/--time day|month|year
+    - --json
+  - name: news "<query>"
+    description: Search the news (POST /news).
+  - name: trending <github|hackernews>
+    description: Trending topics (POST /trending).
+  retrieval:
+  - name: crawl <url>
+    description: Read a page (POST /crawl).
+  - name: sitemap <url>
+    description: List a site's links (POST /sitemap).
+  account:
+  - name: balance
+    description: Remaining credits (GET /usage).
+  skills:
+  - name: learn
+    description: Turn a URL (or a documentation site with --site) into an installable Agent Skill; added in 1.4.0.
+key_flows:
+  deep_search:
+    command: s1 search "web framework" -c 3
+    description: Search, then crawl the top 3 results for their full text; bills 1 credit for the search plus 1
+      per page crawled.
+  scripting:
+    command: s1 search "test" --json | jq '.results[0].title'
+    description: Machine-readable output straight into jq.
+env:
+- SEARCH1API_KEY takes precedence over saved OAuth credentials
+removed: s1 reasoning and s1 models were removed in CLI 1.2.3 (endpoint discontinued).

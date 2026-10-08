@@ -1,0 +1,39 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://blog.s1.dev",
+      "api-catalog": [
+        {
+          "href": "https://blog.s1.dev/api/public/posts",
+          "title": "List published blog posts",
+          "type": "application/json"
+        },
+        {
+          "href": "https://blog.s1.dev/api/public/search",
+          "title": "Search published blog posts",
+          "type": "application/json"
+        },
+        {
+          "href": "https://blog.s1.dev/api/public/tags",
+          "title": "List blog tags",
+          "type": "application/json"
+        },
+        {
+          "href": "https://blog.s1.dev/mcp",
+          "title": "Public read-only blog MCP",
+          "type": "application/json"
+        },
+        {
+          "href": "https://blog.s1.dev/llms.txt",
+          "title": "llms.txt index",
+          "type": "text/plain"
+        },
+        {
+          "href": "https://blog.s1.dev/rss.xml",
+          "title": "RSS feed",
+          "type": "application/rss+xml"
+        }
+      ]
+    }
+  ]
+}

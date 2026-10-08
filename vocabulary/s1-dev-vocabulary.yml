@@ -1,0 +1,144 @@
+generated: '2026-10-07'
+method: derived
+generator: derive-vocabulary.py
+source: openapi/s1-dev-openapi.yml
+vocabulary:
+  name: Search1API Domain Vocabulary
+  description: 'Terms declared by Search1API''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
+    Derived, not authored.'
+  version: '2026-10-07'
+  terms:
+  - term: ApiError
+    definition: 'Search1API error. Every JSON error carries `ok: false`, `error` (a short status-derived label) and `message` (human-readable
+      detail); validation failures add `errors`. Payment challenges may use RFC 9457 problem detail fields.'
+    tags:
+    - Object
+    source: openapi/s1-dev-openapi.yml#/components/schemas/ApiError
+  - term: SearchParameters
+    definition: 'Object declared by the contract with fields: query, search_service, max_results, page, crawl_results, image, include_sites, exclude_sites,
+      language, time_range.'
+    tags:
+    - Object
+    source: openapi/s1-dev-openapi.yml#/components/schemas/SearchParameters
+  - term: NewsParameters
+    definition: 'Object declared by the contract with fields: query, search_service, max_results, crawl_results, image, include_sites, exclude_sites,
+      language, time_range.'
+    tags:
+    - Object
+    source: openapi/s1-dev-openapi.yml#/components/schemas/NewsParameters
+  - term: CrawlRequest
+    definition: 'Object declared by the contract with fields: url, enableFallback.'
+    tags:
+    - Object
+    source: openapi/s1-dev-openapi.yml#/components/schemas/CrawlRequest
+  - term: SitemapRequest
+    definition: 'Object declared by the contract with fields: url, type.'
+    tags:
+    - Object
+    source: openapi/s1-dev-openapi.yml#/components/schemas/SitemapRequest
+  - term: TrendingRequest
+    definition: 'Object declared by the contract with fields: search_service, max_results.'
+    tags:
+    - Object
+    source: openapi/s1-dev-openapi.yml#/components/schemas/TrendingRequest
+  - term: ExtractRequest
+    definition: 'Object declared by the contract with fields: url, prompt, response_format.'
+    tags:
+    - Object
+    source: openapi/s1-dev-openapi.yml#/components/schemas/ExtractRequest
+  - term: DeepcrawlRequest
+    definition: 'Object declared by the contract with fields: url, type.'
+    tags:
+    - Object
+    source: openapi/s1-dev-openapi.yml#/components/schemas/DeepcrawlRequest
+  - term: SearchResult
+    definition: 'Object declared by the contract with fields: title, link, snippet, content, published_date, kind, stars, language, num_comments,
+      story_url, points.'
+    tags:
+    - Object
+    source: openapi/s1-dev-openapi.yml#/components/schemas/SearchResult
+  - term: SearchResponse
+    definition: 'Object declared by the contract with fields: searchParameters, results, images.'
+    tags:
+    - Object
+    source: openapi/s1-dev-openapi.yml#/components/schemas/SearchResponse
+  - term: SearchBatchResponse
+    definition: 'Object declared by the contract with fields: results, summary.'
+    tags:
+    - Object
+    source: openapi/s1-dev-openapi.yml#/components/schemas/SearchBatchResponse
+  - term: NewsResponse
+    definition: 'Object declared by the contract with fields: searchParameters, results, images.'
+    tags:
+    - Object
+    source: openapi/s1-dev-openapi.yml#/components/schemas/NewsResponse
+  - term: NewsBatchResponse
+    definition: 'Object declared by the contract with fields: results, summary.'
+    tags:
+    - Object
+    source: openapi/s1-dev-openapi.yml#/components/schemas/NewsBatchResponse
+  - term: AskResult
+    definition: 'Object declared by the contract with fields: title, link, snippet, published_date, source, relevance.'
+    tags:
+    - Object
+    source: openapi/s1-dev-openapi.yml#/components/schemas/AskResult
+  - term: AskResponse
+    definition: 'Object declared by the contract with fields: query, intent, results, errors.'
+    tags:
+    - Object
+    source: openapi/s1-dev-openapi.yml#/components/schemas/AskResponse
+  - term: CrawlResult
+    definition: 'Object declared by the contract with fields: title, link, content, metadata.'
+    tags:
+    - Object
+    source: openapi/s1-dev-openapi.yml#/components/schemas/CrawlResult
+  - term: CrawlResponse
+    definition: 'Object declared by the contract with fields: crawlParameters, results.'
+    tags:
+    - Object
+    source: openapi/s1-dev-openapi.yml#/components/schemas/CrawlResponse
+  - term: SitemapResponse
+    definition: 'Object declared by the contract with fields: links.'
+    tags:
+    - Object
+    source: openapi/s1-dev-openapi.yml#/components/schemas/SitemapResponse
+  - term: TrendingResult
+    definition: 'Object declared by the contract with fields: title, url, description.'
+    tags:
+    - Object
+    source: openapi/s1-dev-openapi.yml#/components/schemas/TrendingResult
+  - term: TrendingResponse
+    definition: 'Object declared by the contract with fields: trendingParameters, results.'
+    tags:
+    - Object
+    source: openapi/s1-dev-openapi.yml#/components/schemas/TrendingResponse
+  - term: ExtractResponse
+    definition: 'Object declared by the contract with fields: success, extractParameters, results.'
+    tags:
+    - Object
+    source: openapi/s1-dev-openapi.yml#/components/schemas/ExtractResponse
+  - term: DeepcrawlAcceptedResponse
+    definition: 'Object declared by the contract with fields: taskId, status.'
+    tags:
+    - Object
+    source: openapi/s1-dev-openapi.yml#/components/schemas/DeepcrawlAcceptedResponse
+  - term: DeepcrawlStatusResponse
+    definition: 'Object declared by the contract with fields: taskId, status, success, message, error, r2Key, zipUrl.'
+    tags:
+    - Object
+    source: openapi/s1-dev-openapi.yml#/components/schemas/DeepcrawlStatusResponse
+  - term: HealthResponse
+    definition: 'Object declared by the contract with fields: status, timestamp, version.'
+    tags:
+    - Object
+    source: openapi/s1-dev-openapi.yml#/components/schemas/HealthResponse
+  - term: UsageResponse
+    definition: 'Object declared by the contract with fields: usage, user_id, credential_type, client_id.'
+    tags:
+    - Object
+    source: openapi/s1-dev-openapi.yml#/components/schemas/UsageResponse
+  - term: FeedbackResponse
+    definition: 'Object declared by the contract with fields: id, status.'
+    tags:
+    - Object
+    source: openapi/s1-dev-openapi.yml#/components/schemas/FeedbackResponse

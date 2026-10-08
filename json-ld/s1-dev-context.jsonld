@@ -1,0 +1,256 @@
+{
+  "@context": {
+    "@vocab": "https://s1.dev/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "s1": "https://s1.dev/schema#",
+    "ApiError": "s1:ApiError",
+    "ok": {
+      "@id": "s1:ok",
+      "@type": "xsd:boolean"
+    },
+    "error": {
+      "@id": "s1:error",
+      "@type": "xsd:string"
+    },
+    "message": {
+      "@id": "s1:message",
+      "@type": "xsd:string"
+    },
+    "errors": {
+      "@id": "s1:errors",
+      "@container": "@list"
+    },
+    "type": {
+      "@id": "s1:type",
+      "@type": "@id"
+    },
+    "title": {
+      "@id": "s1:title",
+      "@type": "xsd:string"
+    },
+    "status": {
+      "@id": "s1:status",
+      "@type": "xsd:integer"
+    },
+    "detail": {
+      "@id": "s1:detail",
+      "@type": "xsd:string"
+    },
+    "SearchParameters": "s1:SearchParameters",
+    "query": {
+      "@id": "s1:query",
+      "@type": "xsd:string"
+    },
+    "search_service": {
+      "@id": "s1:search_service",
+      "@type": "xsd:string"
+    },
+    "max_results": {
+      "@id": "s1:max_results",
+      "@type": "xsd:integer"
+    },
+    "page": {
+      "@id": "s1:page",
+      "@type": "xsd:integer"
+    },
+    "crawl_results": {
+      "@id": "s1:crawl_results",
+      "@type": "xsd:integer"
+    },
+    "image": {
+      "@id": "s1:image",
+      "@type": "xsd:boolean"
+    },
+    "include_sites": {
+      "@id": "s1:include_sites",
+      "@container": "@list"
+    },
+    "exclude_sites": {
+      "@id": "s1:exclude_sites",
+      "@container": "@list"
+    },
+    "language": {
+      "@id": "s1:language",
+      "@type": "xsd:string"
+    },
+    "time_range": {
+      "@id": "s1:time_range",
+      "@type": "xsd:string"
+    },
+    "NewsParameters": "s1:NewsParameters",
+    "CrawlRequest": "s1:CrawlRequest",
+    "url": {
+      "@id": "s1:url",
+      "@type": "@id"
+    },
+    "enableFallback": {
+      "@id": "s1:enableFallback",
+      "@type": "xsd:boolean"
+    },
+    "SitemapRequest": "s1:SitemapRequest",
+    "TrendingRequest": "s1:TrendingRequest",
+    "ExtractRequest": "s1:ExtractRequest",
+    "prompt": {
+      "@id": "s1:prompt",
+      "@type": "xsd:string"
+    },
+    "response_format": {
+      "@id": "s1:response_format"
+    },
+    "DeepcrawlRequest": "s1:DeepcrawlRequest",
+    "SearchResult": "s1:SearchResult",
+    "link": {
+      "@id": "s1:link",
+      "@type": "@id"
+    },
+    "snippet": {
+      "@id": "s1:snippet",
+      "@type": "xsd:string"
+    },
+    "content": {
+      "@id": "s1:content",
+      "@type": "xsd:string"
+    },
+    "published_date": {
+      "@id": "s1:published_date",
+      "@type": "xsd:string"
+    },
+    "kind": {
+      "@id": "s1:kind",
+      "@type": "xsd:string"
+    },
+    "stars": {
+      "@id": "s1:stars",
+      "@type": "xsd:integer"
+    },
+    "num_comments": {
+      "@id": "s1:num_comments",
+      "@type": "xsd:integer"
+    },
+    "story_url": {
+      "@id": "s1:story_url",
+      "@type": "@id"
+    },
+    "points": {
+      "@id": "s1:points",
+      "@type": "xsd:integer"
+    },
+    "SearchResponse": "s1:SearchResponse",
+    "searchParameters": {
+      "@id": "s1:searchParameters",
+      "@type": "@id"
+    },
+    "results": {
+      "@id": "s1:results",
+      "@container": "@list"
+    },
+    "images": {
+      "@id": "s1:images",
+      "@container": "@list"
+    },
+    "SearchBatchResponse": "s1:SearchBatchResponse",
+    "summary": {
+      "@id": "s1:summary"
+    },
+    "NewsResponse": "s1:NewsResponse",
+    "NewsBatchResponse": "s1:NewsBatchResponse",
+    "AskResult": "s1:AskResult",
+    "source": {
+      "@id": "s1:source",
+      "@type": "xsd:string"
+    },
+    "relevance": {
+      "@id": "s1:relevance",
+      "@type": "xsd:decimal"
+    },
+    "AskResponse": "s1:AskResponse",
+    "intent": {
+      "@id": "s1:intent"
+    },
+    "CrawlResult": "s1:CrawlResult",
+    "metadata": {
+      "@id": "s1:metadata"
+    },
+    "CrawlResponse": "s1:CrawlResponse",
+    "crawlParameters": {
+      "@id": "s1:crawlParameters"
+    },
+    "SitemapResponse": "s1:SitemapResponse",
+    "links": {
+      "@id": "s1:links",
+      "@container": "@list"
+    },
+    "TrendingResult": "s1:TrendingResult",
+    "description": {
+      "@id": "s1:description",
+      "@type": "xsd:string"
+    },
+    "TrendingResponse": "s1:TrendingResponse",
+    "trendingParameters": {
+      "@id": "s1:trendingParameters",
+      "@type": "@id"
+    },
+    "ExtractResponse": "s1:ExtractResponse",
+    "success": {
+      "@id": "s1:success",
+      "@type": "xsd:boolean"
+    },
+    "extractParameters": {
+      "@id": "s1:extractParameters"
+    },
+    "DeepcrawlAcceptedResponse": "s1:DeepcrawlAcceptedResponse",
+    "taskId": {
+      "@id": "s1:taskId",
+      "@type": "xsd:string"
+    },
+    "DeepcrawlStatusResponse": "s1:DeepcrawlStatusResponse",
+    "r2Key": {
+      "@id": "s1:r2Key",
+      "@type": "xsd:string"
+    },
+    "zipUrl": {
+      "@id": "s1:zipUrl",
+      "@type": "@id"
+    },
+    "HealthResponse": "s1:HealthResponse",
+    "timestamp": {
+      "@id": "s1:timestamp",
+      "@type": "xsd:dateTime"
+    },
+    "version": {
+      "@id": "s1:version",
+      "@type": "xsd:string"
+    },
+    "UsageResponse": "s1:UsageResponse",
+    "usage": {
+      "@id": "s1:usage",
+      "@type": "xsd:integer"
+    },
+    "user_id": {
+      "@id": "s1:user_id",
+      "@type": "xsd:string"
+    },
+    "credential_type": {
+      "@id": "s1:credential_type",
+      "@type": "xsd:string"
+    },
+    "client_id": {
+      "@id": "s1:client_id",
+      "@type": "xsd:string"
+    },
+    "FeedbackResponse": "s1:FeedbackResponse",
+    "id": {
+      "@id": "s1:id",
+      "@type": "xsd:string"
+    }
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "Search1API API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects Search1API's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-10-07) from openapi/s1-dev-openapi.yml.",
+  "dcterms:created": "2026-10-07",
+  "dcterms:source": [
+    "openapi/s1-dev-openapi.yml"
+  ]
+}

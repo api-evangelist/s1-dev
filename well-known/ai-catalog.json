@@ -1,0 +1,107 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "Search1API",
+    "identifier": "https://s1.dev",
+    "identityType": "dns"
+  },
+  "entries": [
+    {
+      "identifier": "urn:air:s1.dev:mcp:search1api",
+      "displayName": "Search1API MCP server",
+      "description": "Remote MCP server exposing web search, news, crawl, sitemap, and trending tools over streamable HTTP, with OAuth 2.1 (PKCE) or an API key.",
+      "type": "application/mcp-server-card+json",
+      "url": "https://s1.dev/.well-known/mcp/server-card.json",
+      "publisher": {
+        "identifier": "https://s1.dev",
+        "identityType": "dns",
+        "displayName": "Search1API"
+      },
+      "trustManifest": {
+        "identity": "https://mcp.search1api.com",
+        "identityType": "dns",
+        "provenance": [
+          {
+            "relation": "publishedFrom",
+            "sourceId": "https://github.com/superagents-lab/search1api-mcp"
+          }
+        ],
+        "privacyPolicyUrl": "https://blog.s1.dev/pages/privacy",
+        "termsOfServiceUrl": "https://blog.s1.dev/pages/terms"
+      }
+    },
+    {
+      "identifier": "urn:air:s1.dev:api:search1api",
+      "displayName": "Search1API REST API",
+      "description": "OpenAPI 3.1 description of the public search, news, crawl, screenshot, sitemap, trending, extract, and deepcrawl endpoints.",
+      "type": "application/vnd.oai.openapi+json;version=3.1",
+      "url": "https://api.search1api.com/openapi.json",
+      "publisher": {
+        "identifier": "https://s1.dev",
+        "identityType": "dns",
+        "displayName": "Search1API"
+      },
+      "trustManifest": {
+        "identity": "https://api.search1api.com",
+        "identityType": "dns",
+        "provenance": [
+          {
+            "relation": "publishedFrom",
+            "sourceId": "https://s1.dev/docs"
+          }
+        ],
+        "privacyPolicyUrl": "https://blog.s1.dev/pages/privacy",
+        "termsOfServiceUrl": "https://blog.s1.dev/pages/terms"
+      }
+    },
+    {
+      "identifier": "urn:air:s1.dev:skills:search1api",
+      "displayName": "Search1API agent skill",
+      "description": "Web search, content crawling, news, sitemap, and trending topics via the Search1API CLI (s1). Covers 13+ search engines, clean content extraction, and multi-source news.",
+      "type": "application/agent-skills+md",
+      "url": "https://raw.githubusercontent.com/superagents-lab/search1api-cli/master/skills/search1api/SKILL.md",
+      "publisher": {
+        "identifier": "https://s1.dev",
+        "identityType": "dns",
+        "displayName": "Search1API"
+      },
+      "trustManifest": {
+        "identity": "https://raw.githubusercontent.com/superagents-lab/search1api-cli/master/skills/search1api/SKILL.md",
+        "identityType": "dns",
+        "provenance": [
+          {
+            "relation": "publishedFrom",
+            "sourceId": "https://github.com/superagents-lab/search1api-cli",
+            "sourceDigest": "sha256:d991691275e2a1c9e5f2a36f642b57a1d4618d021479520d3c68529062430b30"
+          }
+        ],
+        "privacyPolicyUrl": "https://blog.s1.dev/pages/privacy",
+        "termsOfServiceUrl": "https://blog.s1.dev/pages/terms"
+      }
+    },
+    {
+      "identifier": "urn:air:s1.dev:plugins:search1api-mcp",
+      "displayName": "Search1API agent plugin manifest",
+      "description": "Agent Plugins manifest for installing the Search1API MCP server into plugin-aware agent hosts.",
+      "type": "application/agent-plugins+json",
+      "url": "https://raw.githubusercontent.com/superagents-lab/search1api-mcp/main/plugin.json",
+      "publisher": {
+        "identifier": "https://s1.dev",
+        "identityType": "dns",
+        "displayName": "Search1API"
+      },
+      "trustManifest": {
+        "identity": "https://github.com/superagents-lab/search1api-mcp",
+        "identityType": "dns",
+        "provenance": [
+          {
+            "relation": "publishedFrom",
+            "sourceId": "https://github.com/superagents-lab/search1api-mcp"
+          }
+        ],
+        "privacyPolicyUrl": "https://blog.s1.dev/pages/privacy",
+        "termsOfServiceUrl": "https://blog.s1.dev/pages/terms"
+      }
+    }
+  ]
+}

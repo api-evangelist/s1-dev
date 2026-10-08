@@ -1,0 +1,45 @@
+{
+  "provider": "s1-dev",
+  "sources": [
+    "_original/search1api-openapi.json",
+    "s1-dev-openapi.yml"
+  ],
+  "outputs": [
+    "s1-dev-account-api-openapi.yml",
+    "s1-dev-crawl-api-openapi.yml",
+    "s1-dev-feedback-api-openapi.yml",
+    "s1-dev-screenshot-api-openapi.yml",
+    "s1-dev-search-api-openapi.yml",
+    "s1-dev-system-api-openapi.yml"
+  ],
+  "archived": [
+    "archived openapi/s1-dev-openapi.yml"
+  ],
+  "errors": [],
+  "warnings": [],
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "search1api-openapi.json: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "search1api-openapi.json: declared missing tag: Account",
+    "search1api-openapi.json: declared missing tag: Crawl",
+    "search1api-openapi.json: declared missing tag: Feedback",
+    "search1api-openapi.json: declared missing tag: Screenshot",
+    "search1api-openapi.json: declared missing tag: Search",
+    "search1api-openapi.json: declared missing tag: System",
+    "s1-dev-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "s1-dev-openapi.yml: declared missing tag: Account",
+    "s1-dev-openapi.yml: declared missing tag: Crawl",
+    "s1-dev-openapi.yml: declared missing tag: Feedback",
+    "s1-dev-openapi.yml: declared missing tag: Screenshot",
+    "s1-dev-openapi.yml: declared missing tag: Search",
+    "s1-dev-openapi.yml: declared missing tag: System",
+    "tag 'Account' spans 2 source specs (search1api-openapi.json, s1-dev-openapi.yml): per-path servers applied",
+    "tag 'Crawl' spans 2 source specs (search1api-openapi.json, s1-dev-openapi.yml): per-path servers applied",
+    "tag 'Feedback' spans 2 source specs (search1api-openapi.json, s1-dev-openapi.yml): per-path servers applied",
+    "tag 'Screenshot' spans 2 source specs (search1api-openapi.json, s1-dev-openapi.yml): per-path servers applied",
+    "tag 'Search' spans 2 source specs (search1api-openapi.json, s1-dev-openapi.yml): per-path servers applied",
+    "tag 'System' spans 2 source specs (search1api-openapi.json, s1-dev-openapi.yml): per-path servers applied",
+    "apis.yml register: written (+6 apis, 8 total)"
+  ],
+  "skipped": []
+}

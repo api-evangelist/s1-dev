@@ -1,0 +1,1056 @@
+openapi: 3.2.0
+info:
+  title: S1 Dev Search API
+  version: 1.0.0
+  x-guidance: Search1API provides web search, news aggregation, URL crawling, webpage screenshots, sitemap extraction, trending topics, content extraction, and deep crawling. All paid endpoints accept POST with a JSON body. Use POST /search with a "query" field for web search. Use POST /news with a "query" field for news. Use POST /ask with a natural-language "query" to have Search1API choose the engines and time window and return only relevant results (API key only). Use POST /crawl with a "url" field to crawl a page. Use POST /screenshot with a "url" field to render a PNG, JPEG, or WebP image. Use POST /sitemap with a "url" field to extract sitemap URLs. Use POST /trending with a "search_service" field for trends. Use POST /extract with a "url" field for structured content extraction. Use POST /deepcrawl with a "url" field for deep multi-page crawling.
+  description: 'Operations tagged Search across 2 of this provider''s published API definitions: search1api-openapi.json, s1-dev-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.search1api.com
+tags:
+- name: Search
+paths:
+  /search:
+    post:
+      operationId: search
+      summary: Search the web using multiple search engines
+      description: Search the live public web when the answer depends on current information, sources, or research a model's training data cannot cover. Returns ranked results with id, title, URL, snippet, and `published_date` (ISO 8601, when the engine exposes one) across 13+ engines, with optional images. Set `crawl_results` to pull the top N result pages in the same call — each crawled page is billed as an additional crawl — or pass a result URL to POST /crawl separately. Costs 1 credit per request.
+      tags:
+      - Search
+      x-codeSamples:
+      - id: js
+        lang: ts
+        label: TypeScript SDK
+        source: "import { Search1API } from '@search1api/client';\n\nconst client = new Search1API();\nconst response = await client.search('latest AI agent frameworks', {\n  maxResults: 10,\n});\n\nconsole.log(response.results);"
+      - id: python
+        lang: python
+        label: Python SDK
+        source: "from search1api import Search1API\n\nclient = Search1API()\nresponse = client.search(\n    \"latest AI agent frameworks\",\n    max_results=10,\n)\n\nprint(response[\"results\"])"
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/SearchResponse'
+                - $ref: '#/components/schemas/SearchBatchResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '402':
+          description: Payment Required
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      security:
+      - bearerAuth: []
+      x-payment-info:
+        protocols:
+        - mpp
+        pricingMode: fixed
+        price: '0.003'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              anyOf:
+              - type: object
+                properties:
+                  query:
+                    type: string
+                    minLength: 1
+                  search_service:
+                    type: string
+                    enum:
+                    - google
+                    - bing
+                    - bingcn
+                    - duckduckgo
+                    - yahoo
+                    - yandex
+                    - youtube
+                    - x
+                    - reddit
+                    - github
+                    - arxiv
+                    - wechat
+                    - bilibili
+                    - imdb
+                    - wikipedia
+                    - ''
+                    - baidu
+                    - '360'
+                    - quark
+                  max_results:
+                    type: integer
+                    minimum: 1
+                    maximum: 50
+                    default: 5
+                  page:
+                    type: integer
+                    minimum: 1
+                    maximum: 100
+                    default: 1
+                  crawl_results:
+                    type: integer
+                    minimum: 0
+                    maximum: 50
+                    default: 0
+                  image:
+                    type: boolean
+                    default: false
+                  include_sites:
+                    type: array
+                    items:
+                      type: string
+                    default: []
+                  exclude_sites:
+                    type: array
+                    items:
+                      type: string
+                    default: []
+                  language:
+                    type: string
+                  time_range:
+                    type: string
+                    enum:
+                    - day
+                    - week
+                    - month
+                    - year
+                    - ''
+                required:
+                - query
+                additionalProperties: false
+              - type: array
+                items:
+                  type: object
+                  properties:
+                    query:
+                      type: string
+                      minLength: 1
+                    search_service:
+                      type: string
+                      enum:
+                      - google
+                      - bing
+                      - bingcn
+                      - duckduckgo
+                      - yahoo
+                      - yandex
+                      - youtube
+                      - x
+                      - reddit
+                      - github
+                      - arxiv
+                      - wechat
+                      - bilibili
+                      - imdb
+                      - wikipedia
+                      - ''
+                      - baidu
+                      - '360'
+                      - quark
+                    max_results:
+                      type: integer
+                      minimum: 1
+                      maximum: 50
+                      default: 5
+                    page:
+                      type: integer
+                      minimum: 1
+                      maximum: 100
+                      default: 1
+                    crawl_results:
+                      type: integer
+                      minimum: 0
+                      maximum: 50
+                      default: 0
+                    image:
+                      type: boolean
+                      default: false
+                    include_sites:
+                      type: array
+                      items:
+                        type: string
+                      default: []
+                    exclude_sites:
+                      type: array
+                      items:
+                        type: string
+                      default: []
+                    language:
+                      type: string
+                    time_range:
+                      type: string
+                      enum:
+                      - day
+                      - week
+                      - month
+                      - year
+                      - ''
+                  required:
+                  - query
+                  additionalProperties: false
+                minItems: 1
+    servers:
+    - url: https://api.search1api.com
+  /news:
+    post:
+      operationId: news
+      summary: Search news articles across multiple sources
+      description: Search recent news when the question is about events, announcements, or coverage rather than reference material. Returns articles from verified publishers with title, URL, snippet, `published_date` (ISO 8601, when known), and optional full page content, filterable by site, language, and time range. For questions that are not time-sensitive, prefer POST /search. Costs 1 credit per request.
+      tags:
+      - Search
+      x-codeSamples:
+      - id: js
+        lang: ts
+        label: TypeScript SDK
+        source: "import { Search1API } from '@search1api/client';\n\nconst client = new Search1API();\nconst response = await client.news('latest AI industry news', {\n  maxResults: 10,\n});\n\nconsole.log(response.results);"
+      - id: python
+        lang: python
+        label: Python SDK
+        source: "from search1api import Search1API\n\nclient = Search1API()\nresponse = client.news(\n    \"latest AI industry news\",\n    max_results=10,\n)\n\nprint(response[\"results\"])"
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/NewsResponse'
+                - $ref: '#/components/schemas/NewsBatchResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '402':
+          description: Payment Required
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      security:
+      - bearerAuth: []
+      x-payment-info:
+        protocols:
+        - mpp
+        pricingMode: fixed
+        price: '0.003'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              anyOf:
+              - type: object
+                properties:
+                  query:
+                    type: string
+                    minLength: 1
+                  search_service:
+                    type: string
+                    enum:
+                    - google
+                    - bing
+                    - duckduckgo
+                    - yahoo
+                    - hackernews
+                    - ''
+                    - reuters
+                  max_results:
+                    type: integer
+                    minimum: 1
+                    maximum: 50
+                    default: 5
+                  crawl_results:
+                    type: integer
+                    minimum: 0
+                    maximum: 50
+                    default: 0
+                  image:
+                    type: boolean
+                    default: false
+                  include_sites:
+                    type: array
+                    items:
+                      type: string
+                    default: []
+                  exclude_sites:
+                    type: array
+                    items:
+                      type: string
+                    default: []
+                  language:
+                    type: string
+                  time_range:
+                    type: string
+                    enum:
+                    - day
+                    - week
+                    - month
+                    - year
+                    - ''
+                required:
+                - query
+                additionalProperties: false
+              - type: array
+                items:
+                  type: object
+                  properties:
+                    query:
+                      type: string
+                      minLength: 1
+                    search_service:
+                      type: string
+                      enum:
+                      - google
+                      - bing
+                      - duckduckgo
+                      - yahoo
+                      - hackernews
+                      - ''
+                      - reuters
+                    max_results:
+                      type: integer
+                      minimum: 1
+                      maximum: 50
+                      default: 5
+                    crawl_results:
+                      type: integer
+                      minimum: 0
+                      maximum: 50
+                      default: 0
+                    image:
+                      type: boolean
+                      default: false
+                    include_sites:
+                      type: array
+                      items:
+                        type: string
+                      default: []
+                    exclude_sites:
+                      type: array
+                      items:
+                        type: string
+                      default: []
+                    language:
+                      type: string
+                    time_range:
+                      type: string
+                      enum:
+                      - day
+                      - week
+                      - month
+                      - year
+                      - ''
+                  required:
+                  - query
+                  additionalProperties: false
+                minItems: 1
+    servers:
+    - url: https://api.search1api.com
+  /ask:
+    post:
+      operationId: ask
+      summary: Search the engines a natural-language request calls for
+      description: Agentic search. Describe what you are looking for in plain language and let a decision model (currently TypeSafe Jev) decide where to look. It picks up to five engines (web search, Hacker News, Reddit, GitHub, X, arXiv, Wikipedia, IMDb, WeChat, YouTube), rewrites the request into search keywords, infers a publication window from phrases such as "this week", searches the engines in parallel, and returns only the results judged relevant, merged and ranked, so agents read fewer off-topic results. The request takes only `query`; engines, keywords, and the window are always chosen by the model, and the response reports them in `intent`. Use POST /search instead when you already know the engine and keywords and want its raw ranking. Costs 5 credits per request.
+      tags:
+      - Search
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AskResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '402':
+          description: Payment Required
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      security:
+      - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                query:
+                  type: string
+                  minLength: 1
+                  maxLength: 500
+                  description: What you are looking for, in natural language. Platform hints ("on Reddit", "papers") and time hints ("this week") steer engine and time-range selection.
+              required:
+              - query
+              additionalProperties: false
+            examples:
+              community:
+                summary: Let Search1API choose
+                description: 'Engines and the time window are inferred from the wording: community discussion, within the past month.'
+                value:
+                  query: What are developers saying about Bun 1.3 this month?
+    servers:
+    - url: https://api.search1api.com
+  /trending:
+    post:
+      operationId: trending
+      summary: Get trending topics from various platforms
+      description: List what is currently popular on a supported platform, such as GitHub repositories or Hacker News stories, when the user asks what is trending or new right now. This reads a platform's own live ranking rather than performing a query — for topic searches use POST /search. Costs 1 credit per request.
+      tags:
+      - Search
+      x-codeSamples:
+      - id: js
+        lang: ts
+        label: TypeScript SDK
+        source: "import { Search1API } from '@search1api/client';\n\nconst client = new Search1API();\nconst response = await client.trending('github', {\n  maxResults: 10,\n});\n\nconsole.log(response);"
+      - id: python
+        lang: python
+        label: Python SDK
+        source: 'from search1api import Search1API
+
+
+          client = Search1API()
+
+          response = client.trending("github", max_results=10)
+
+
+          print(response)'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrendingResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '402':
+          description: Payment Required
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '502':
+          description: Bad Gateway
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      security:
+      - bearerAuth: []
+      x-payment-info:
+        protocols:
+        - mpp
+        pricingMode: fixed
+        price: '0.003'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                search_service:
+                  type: string
+                  minLength: 1
+                max_results:
+                  type: integer
+                  minimum: 1
+              required:
+              - search_service
+              additionalProperties: false
+    servers:
+    - url: https://api.search1api.com
+components:
+  schemas:
+    NewsBatchResponse:
+      type: object
+      required:
+      - results
+      - summary
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            required:
+            - success
+            - cost
+            properties:
+              success:
+                type: boolean
+              data:
+                $ref: '#/components/schemas/NewsResponse'
+              error:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  statusCode:
+                    type: integer
+              cost:
+                type: integer
+                minimum: 0
+        summary:
+          type: object
+          required:
+          - total
+          - successful
+          - failed
+          - totalCost
+          properties:
+            total:
+              type: integer
+              minimum: 0
+            successful:
+              type: integer
+              minimum: 0
+            failed:
+              type: integer
+              minimum: 0
+            totalCost:
+              type: integer
+              minimum: 0
+    NewsParameters:
+      type: object
+      properties:
+        query:
+          type: string
+          minLength: 1
+        search_service:
+          type: string
+          enum:
+          - google
+          - bing
+          - duckduckgo
+          - yahoo
+          - hackernews
+          - ''
+          - reuters
+        max_results:
+          type: integer
+          minimum: 1
+          maximum: 50
+          default: 5
+        crawl_results:
+          type: integer
+          minimum: 0
+          maximum: 50
+          default: 0
+        image:
+          type: boolean
+          default: false
+        include_sites:
+          type: array
+          items:
+            type: string
+          default: []
+        exclude_sites:
+          type: array
+          items:
+            type: string
+          default: []
+        language:
+          type: string
+        time_range:
+          type: string
+          enum:
+          - day
+          - week
+          - month
+          - year
+          - ''
+      required:
+      - query
+      additionalProperties: false
+    SearchParameters:
+      type: object
+      properties:
+        query:
+          type: string
+          minLength: 1
+        search_service:
+          type: string
+          enum:
+          - google
+          - bing
+          - bingcn
+          - duckduckgo
+          - yahoo
+          - yandex
+          - youtube
+          - x
+          - reddit
+          - github
+          - arxiv
+          - wechat
+          - bilibili
+          - imdb
+          - wikipedia
+          - ''
+          - baidu
+          - '360'
+          - quark
+        max_results:
+          type: integer
+          minimum: 1
+          maximum: 50
+          default: 5
+        page:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 1
+        crawl_results:
+          type: integer
+          minimum: 0
+          maximum: 50
+          default: 0
+        image:
+          type: boolean
+          default: false
+        include_sites:
+          type: array
+          items:
+            type: string
+          default: []
+        exclude_sites:
+          type: array
+          items:
+            type: string
+          default: []
+        language:
+          type: string
+        time_range:
+          type: string
+          enum:
+          - day
+          - week
+          - month
+          - year
+          - ''
+      required:
+      - query
+      additionalProperties: false
+    AskResponse:
+      type: object
+      required:
+      - query
+      - intent
+      - results
+      - errors
+      properties:
+        query:
+          type: string
+          description: The query as sent.
+        intent:
+          type: object
+          required:
+          - search_query
+          - sources
+          - time_range
+          description: How the request was interpreted and searched.
+          properties:
+            search_query:
+              type: string
+              description: Keywords sent to the engines, with platform and time phrases removed.
+            sources:
+              type: array
+              items:
+                type: string
+              description: Engines searched.
+            time_range:
+              type:
+              - string
+              - 'null'
+              enum:
+              - day
+              - week
+              - month
+              - year
+              - null
+              description: Publication window applied, or null for none.
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/AskResult'
+          description: Relevant results from every engine, best first, with duplicates merged. May be empty.
+        errors:
+          type: array
+          description: Engines that failed while others completed. The request is still charged.
+          items:
+            type: object
+            required:
+            - source
+            - message
+            properties:
+              source:
+                type: string
+              message:
+                type: string
+    SearchBatchResponse:
+      type: object
+      required:
+      - results
+      - summary
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            required:
+            - success
+            - cost
+            properties:
+              success:
+                type: boolean
+              data:
+                $ref: '#/components/schemas/SearchResponse'
+              error:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  statusCode:
+                    type: integer
+              cost:
+                type: integer
+                minimum: 0
+        summary:
+          type: object
+          required:
+          - total
+          - successful
+          - failed
+          - totalCost
+          properties:
+            total:
+              type: integer
+              minimum: 0
+            successful:
+              type: integer
+              minimum: 0
+            failed:
+              type: integer
+              minimum: 0
+            totalCost:
+              type: integer
+              minimum: 0
+    TrendingResponse:
+      type: object
+      required:
+      - trendingParameters
+      - results
+      properties:
+        trendingParameters:
+          $ref: '#/components/schemas/TrendingRequest'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/TrendingResult'
+    AskResult:
+      type: object
+      required:
+      - title
+      - link
+      - snippet
+      - source
+      - relevance
+      properties:
+        title:
+          type: string
+        link:
+          type: string
+          format: uri
+        snippet:
+          type: string
+        published_date:
+          type: string
+          description: When the page was published, as ISO 8601 (`YYYY-MM-DD` or `YYYY-MM-DDTHH:MM:SSZ`). Omitted when the engine exposes no date.
+          example: '2026-09-03'
+        source:
+          type: string
+          description: Engine that returned the result.
+        relevance:
+          type: number
+          minimum: 0
+          maximum: 1
+          description: How likely the result is to be about the query, two decimals. Only results scoring at least 0.5 are returned.
+    TrendingRequest:
+      type: object
+      properties:
+        search_service:
+          type: string
+          minLength: 1
+        max_results:
+          type: integer
+          minimum: 1
+      required:
+      - search_service
+      additionalProperties: false
+    SearchResult:
+      type: object
+      required:
+      - title
+      - link
+      - snippet
+      properties:
+        title:
+          type: string
+        link:
+          type: string
+          format: uri
+        snippet:
+          type: string
+        content:
+          type: string
+        published_date:
+          type: string
+          description: 'When the page was published, as ISO 8601: `YYYY-MM-DD` when only the day is known (web search engines), or `YYYY-MM-DDTHH:MM:SSZ` in UTC when the source carries a time (x, reddit, github, arxiv, youtube, bilibili, wechat, news feeds). Omitted when the source exposes no date, so treat it as optional per result.'
+          example: '2026-09-03'
+        kind:
+          type: string
+          enum:
+          - repo
+          - issue
+          - pr
+          - discussion
+          description: 'What a `github` result is: a repository, an issue, a pull request, or a discussion. Only present for `search_service: "github"`.'
+        stars:
+          type: integer
+          description: 'Stargazer count of a `github` repository result (`kind: "repo"`).'
+        language:
+          type: string
+          description: 'Primary language of a `github` repository result (`kind: "repo"`). Omitted when GitHub reports none.'
+        num_comments:
+          type: integer
+          description: Comment count on a `github` issue, pull request or discussion, or on a `hackernews` thread (POST /news).
+        story_url:
+          type: string
+          format: uri
+          description: 'POST /news with `search_service: "hackernews"` only: the submitted article. `link` is the Hacker News discussion thread; `story_url` is empty for Ask HN / Show HN text posts.'
+        points:
+          type: integer
+          description: 'POST /news with `search_service: "hackernews"` only: upvotes on the thread.'
+      additionalProperties: true
+    SearchResponse:
+      type: object
+      required:
+      - searchParameters
+      - results
+      properties:
+        searchParameters:
+          $ref: '#/components/schemas/SearchParameters'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchResult'
+        images:
+          type: array
+          items:
+            type: string
+            format: uri
+    NewsResponse:
+      type: object
+      required:
+      - searchParameters
+      - results
+      properties:
+        searchParameters:
+          $ref: '#/components/schemas/NewsParameters'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/SearchResult'
+        images:
+          type: array
+          items:
+            type: string
+            format: uri
+    TrendingResult:
+      type: object
+      required:
+      - title
+      - url
+      properties:
+        title:
+          type: string
+        url:
+          type: string
+          format: uri
+        description:
+          type:
+          - string
+          - 'null'
+    ApiError:
+      type: object
+      description: 'Search1API error. Every JSON error carries `ok: false`, `error` (a short status-derived label) and `message` (human-readable detail); validation failures add `errors`. Payment challenges may use RFC 9457 problem detail fields.'
+      properties:
+        ok:
+          type: boolean
+          enum:
+          - false
+        error:
+          type: string
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              message:
+                type: string
+              code:
+                type: string
+        type:
+          type: string
+          format: uri
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+      additionalProperties: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key
+x-refined-from:
+- search1api-openapi.json
+- s1-dev-openapi.yml
+x-discovery:
+  ownershipProofs: []

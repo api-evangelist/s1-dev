@@ -1,0 +1,122 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/s1-dev/main/json-schema/s1-dev-ask-response-schema.json",
+  "title": "AskResponse",
+  "x-generated": "2026-10-07",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/s1-dev-openapi.yml#/components/schemas/AskResponse",
+  "type": "object",
+  "required": [
+    "query",
+    "intent",
+    "results",
+    "errors"
+  ],
+  "properties": {
+    "query": {
+      "type": "string",
+      "description": "The query as sent."
+    },
+    "intent": {
+      "type": "object",
+      "required": [
+        "search_query",
+        "sources",
+        "time_range"
+      ],
+      "description": "How the request was interpreted and searched.",
+      "properties": {
+        "search_query": {
+          "type": "string",
+          "description": "Keywords sent to the engines, with platform and time phrases removed."
+        },
+        "sources": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Engines searched."
+        },
+        "time_range": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "enum": [
+            "day",
+            "week",
+            "month",
+            "year",
+            null
+          ],
+          "description": "Publication window applied, or null for none."
+        }
+      }
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/AskResult"
+      },
+      "description": "Relevant results from every engine, best first, with duplicates merged. May be empty."
+    },
+    "errors": {
+      "type": "array",
+      "description": "Engines that failed while others completed. The request is still charged.",
+      "items": {
+        "type": "object",
+        "required": [
+          "source",
+          "message"
+        ],
+        "properties": {
+          "source": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "AskResult": {
+      "type": "object",
+      "required": [
+        "title",
+        "link",
+        "snippet",
+        "source",
+        "relevance"
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "link": {
+          "type": "string",
+          "format": "uri"
+        },
+        "snippet": {
+          "type": "string"
+        },
+        "published_date": {
+          "type": "string",
+          "description": "When the page was published, as ISO 8601 (`YYYY-MM-DD` or `YYYY-MM-DDTHH:MM:SSZ`). Omitted when the engine exposes no date."
+        },
+        "source": {
+          "type": "string",
+          "description": "Engine that returned the result."
+        },
+        "relevance": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "description": "How likely the result is to be about the query, two decimals. Only results scoring at least 0.5 are returned."
+        }
+      }
+    }
+  }
+}

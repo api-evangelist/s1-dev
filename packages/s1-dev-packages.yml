@@ -1,0 +1,118 @@
+generated: '2026-10-07'
+method: searched
+source: https://s1.dev/docs/integrations/sdks; https://s1.dev/docs/changelog (Current versions table); registry
+  metadata from registry.npmjs.org and pypi.org on 2026-10-07
+description: First-party Search1API client libraries, CLI, MCP server and framework plugins, all published by superagents-lab
+  (the GitHub org the docs and registries name). Versions and publish dates read from registry metadata.
+packages:
+- name: '@search1api/client'
+  registry: npm
+  url: https://www.npmjs.com/package/@search1api/client
+  language: typescript
+  official: true
+  version: 0.2.1
+  published: '2026-08-19'
+  source: https://github.com/superagents-lab/search1api-js
+  install: npm install @search1api/client
+  note: 'Official TypeScript client (docs: typed requests, errors, retries, batches, deepcrawl polling).'
+- name: search1api
+  registry: pypi
+  url: https://pypi.org/project/search1api/
+  language: python
+  official: true
+  version: 0.2.1
+  published: '2026-08-19'
+  source: https://github.com/superagents-lab/search1api-python
+  install: pip install search1api
+  note: Official Python client.
+- name: search1api-cli
+  registry: npm
+  url: https://www.npmjs.com/package/search1api-cli
+  language: typescript
+  official: true
+  version: 1.4.0
+  published: '2026-08-25'
+  source: https://github.com/superagents-lab/search1api-cli
+  install: npm install -g search1api-cli
+  note: The s1 CLI with OAuth 2.1 login and the bundled Agent Skill.
+- name: s1 (standalone binary)
+  registry: cdn
+  url: https://cli.search1api.com/install.sh
+  language: binary
+  official: true
+  version: null
+  published: null
+  source: https://github.com/superagents-lab/search1api-cli
+  install: curl -fsSL https://cli.search1api.com/install.sh | bash
+  note: Installer script downloads the latest GitHub release of superagents-lab/search1api-cli; the URL is unpinned
+    and floats to the latest release, so version is recorded as null.
+- name: search1api-mcp
+  registry: npm
+  url: https://www.npmjs.com/package/search1api-mcp
+  language: typescript
+  official: true
+  version: 0.6.1
+  published: '2026-09-03'
+  source: https://github.com/superagents-lab/search1api-mcp
+  install: npx -y search1api-mcp
+  note: Official MCP server; stdio mode of the hosted server.
+- name: '@search1api/ai-sdk'
+  registry: npm
+  url: https://www.npmjs.com/package/@search1api/ai-sdk
+  language: typescript
+  official: true
+  version: 0.1.1
+  published: '2026-10-07'
+  source: https://github.com/superagents-lab/search1api-ai-sdk
+  install: npm install @search1api/ai-sdk
+  note: Official tools for the Vercel AI SDK.
+- name: search1api-langchain
+  registry: pypi
+  url: https://pypi.org/project/search1api-langchain/
+  language: python
+  official: true
+  version: 0.1.0
+  published: '2026-07-29'
+  source: https://github.com/superagents-lab/search1api-langchain
+  install: pip install search1api-langchain
+  note: Official LangChain tools.
+- name: n8n-nodes-search1api
+  registry: npm
+  url: https://www.npmjs.com/package/n8n-nodes-search1api
+  language: typescript
+  official: true
+  version: 0.1.3
+  published: '2026-07-31'
+  source: https://github.com/superagents-lab/n8n-nodes-search1api
+  install: npm install n8n-nodes-search1api
+  note: Official n8n community node.
+- name: opencode-search1api
+  registry: npm
+  url: https://www.npmjs.com/package/opencode-search1api
+  language: typescript
+  official: true
+  version: 0.1.1
+  published: '2026-08-04'
+  source: https://github.com/superagents-lab/opencode-search1api
+  install: npm install opencode-search1api
+  note: Official OpenCode plugin.
+- name: dsh-s1
+  registry: npm
+  url: https://www.npmjs.com/package/dsh-s1
+  language: typescript
+  official: true
+  version: 0.1.0
+  published: '2026-08-14'
+  source: https://github.com/superagents-lab/dsh-s1
+  install: npm install dsh-s1
+  note: Official DeepSeek Harness plugin.
+- name: langchain-search1api
+  registry: pypi
+  url: https://pypi.org/project/langchain-search1api/
+  language: python
+  official: false
+  version: 0.1.0
+  published: '2024-09-17'
+  source: https://github.com/arashbehmand/langchain_search1api
+  install: pip install langchain-search1api
+  note: Community package (author arashbehmand), not first-party.

@@ -1,0 +1,270 @@
+{
+  "name": "Search1API",
+  "version": "0.6.1",
+  "description": "Remote MCP server for Search1API. Exposes live web search, news, page reading, sitemap discovery, and trending topics as tools for AI agents.",
+  "serverUrl": "https://mcp.search1api.com/mcp",
+  "tools": [
+    {
+      "name": "search",
+      "title": "Search the web",
+      "description": "Search the live public web when the user needs current information, sources, or research. Returns citable results with id, title, URL, and text. Each result includes a URL that can be read in full.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Short, focused search query"
+          },
+          "max_results": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 50,
+            "description": "Maximum number of results to return",
+            "default": 10
+          },
+          "search_service": {
+            "type": "string",
+            "description": "Search engine to use; choose one only when it matches the user's source intent",
+            "default": "google",
+            "enum": [
+              "google",
+              "bing",
+              "duckduckgo",
+              "yahoo",
+              "x",
+              "reddit",
+              "github",
+              "youtube",
+              "arxiv",
+              "wechat",
+              "bilibili",
+              "imdb",
+              "wikipedia"
+            ]
+          },
+          "crawl_results": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Number of top results to retrieve as full pages. Each successful page retrieval adds 1 credit to the base 1-credit search request",
+            "default": 0
+          },
+          "include_sites": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Domains to include when the user explicitly scopes the search",
+            "default": []
+          },
+          "exclude_sites": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Domains to exclude from the search",
+            "default": []
+          },
+          "time_range": {
+            "type": "string",
+            "description": "Optional recency window for time-sensitive searches",
+            "enum": [
+              "day",
+              "month",
+              "year"
+            ]
+          }
+        },
+        "required": [
+          "query"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "openWorldHint": true,
+        "title": "Search the web"
+      }
+    },
+    {
+      "name": "news",
+      "title": "Search current news",
+      "description": "Search current news when the user asks about recent events, announcements, or coverage. Returns citable article results with title, URL, snippet, and optional extracted text.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "query": {
+            "type": "string",
+            "description": "Short, focused news query"
+          },
+          "max_results": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 50,
+            "description": "Maximum number of articles to return",
+            "default": 10
+          },
+          "search_service": {
+            "type": "string",
+            "description": "News search engine to use",
+            "default": "bing",
+            "enum": [
+              "google",
+              "bing",
+              "duckduckgo",
+              "yahoo",
+              "hackernews"
+            ]
+          },
+          "crawl_results": {
+            "type": "number",
+            "minimum": 0,
+            "description": "Number of top articles to retrieve as full pages. Each successful retrieval adds 1 credit to the base 1-credit news request",
+            "default": 0
+          },
+          "include_sites": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "News domains to include",
+            "default": []
+          },
+          "exclude_sites": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "News domains to exclude",
+            "default": []
+          },
+          "time_range": {
+            "type": "string",
+            "description": "Optional recency window; use day for breaking news",
+            "enum": [
+              "day",
+              "month",
+              "year"
+            ]
+          }
+        },
+        "required": [
+          "query"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "openWorldHint": true,
+        "title": "Search current news"
+      }
+    },
+    {
+      "name": "crawl",
+      "title": "Read a web page",
+      "description": "Extract the readable title and full text from a public URL supplied by the user or returned by search.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Public HTTP or HTTPS URL to retrieve"
+          }
+        },
+        "required": [
+          "url"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "openWorldHint": true,
+        "title": "Read a web page"
+      }
+    },
+    {
+      "name": "sitemap",
+      "title": "Discover links on a site",
+      "description": "Discover related public links from a page or domain when the user wants to explore a site's structure or available pages.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "Public page or domain URL whose links should be discovered"
+          }
+        },
+        "required": [
+          "url"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "openWorldHint": true,
+        "title": "Discover links on a site"
+      }
+    },
+    {
+      "name": "trending",
+      "title": "Explore trending topics",
+      "description": "List currently trending repositories or stories from GitHub or Hacker News when the user asks what is popular now.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "search_service": {
+            "type": "string",
+            "description": "Platform whose trending items should be returned",
+            "enum": [
+              "github",
+              "hackernews"
+            ],
+            "default": "github"
+          },
+          "max_results": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 50,
+            "description": "Maximum number of trending items to return",
+            "default": 10
+          }
+        },
+        "required": [
+          "search_service"
+        ]
+      },
+      "annotations": {
+        "readOnlyHint": true,
+        "destructiveHint": false,
+        "openWorldHint": true,
+        "title": "Explore trending topics"
+      }
+    }
+  ],
+  "serverInfo": {
+    "name": "Search1API",
+    "title": "Search1API MCP",
+    "version": "0.6.1"
+  },
+  "protocolVersion": "2025-06-18",
+  "transport": {
+    "type": "streamable-http",
+    "endpoint": "https://mcp.search1api.com/mcp"
+  },
+  "capabilities": {
+    "tools": {}
+  },
+  "authentication": {
+    "type": "oauth2",
+    "protectedResourceMetadata": "https://mcp.search1api.com/.well-known/oauth-protected-resource",
+    "authorizationServerMetadata": "https://clerk.s1.dev/.well-known/oauth-authorization-server",
+    "legacyApiKey": {
+      "supported": true,
+      "method": "Authorization: Bearer SEARCH1API_KEY"
+    }
+  },
+  "homepage": "https://s1.dev",
+  "documentation": "https://s1.dev/docs",
+  "instructions": "Search1API MCP exposes web search, news, crawl, sitemap, and trending tools for AI agents. OAuth 2.1 with PKCE is preferred; user-managed API keys remain supported."
+}

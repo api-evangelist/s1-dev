@@ -1,0 +1,101 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Search1API OpenAPI
+  version: 1.0.0
+extends: ../openapi/_original/s1-dev-openapi.yml
+actions:
+- target: $.info
+  update:
+    x-apievangelist:
+      provider: s1-dev
+      profiled: '2026-10-07'
+      conventions: conventions/s1-dev-conventions.yml
+      errors: errors/s1-dev-problem-types.yml
+      rate_limits: rate-limits/s1-dev-rate-limits.yml
+      authentication: authentication/s1-dev-authentication.yml
+- target: $.info
+  update:
+    termsOfService: https://blog.s1.dev/pages/terms
+    contact:
+      name: Search1API support
+      email: sys@search1api.com
+      url: https://s1.dev/contact
+- target: $
+  update:
+    tags:
+    - name: Search
+      description: Web, news and agentic search
+    - name: Retrieval
+      description: Crawl, deepcrawl, sitemap, screenshot and extraction
+    - name: Account
+      description: Usage, health and feedback
+- target: $.paths['/search'].post
+  update:
+    tags:
+    - Search
+- target: $.paths['/news'].post
+  update:
+    tags:
+    - Search
+- target: $.paths['/ask'].post
+  update:
+    tags:
+    - Search
+- target: $.paths['/trending'].post
+  update:
+    tags:
+    - Search
+- target: $.paths['/crawl'].post
+  update:
+    tags:
+    - Retrieval
+- target: $.paths['/deepcrawl'].post
+  update:
+    tags:
+    - Retrieval
+- target: $.paths['/deepcrawl/status/{taskId}'].get
+  update:
+    tags:
+    - Retrieval
+- target: $.paths['/sitemap'].post
+  update:
+    tags:
+    - Retrieval
+- target: $.paths['/screenshot'].post
+  update:
+    tags:
+    - Retrieval
+- target: $.paths['/extract'].post
+  update:
+    tags:
+    - Retrieval
+- target: $.paths['/usage'].get
+  update:
+    tags:
+    - Account
+- target: $.paths['/health'].get
+  update:
+    tags:
+    - Account
+- target: $.paths['/feedback'].post
+  update:
+    tags:
+    - Account
+- target: $.paths['/search'].post
+  update:
+    x-rate-limit: 200 requests per minute per account
+    x-credits: 1
+- target: $.paths['/ask'].post
+  update:
+    x-rate-limit: 30 requests per minute per account
+    x-credits: 5
+- target: $.paths['/screenshot'].post
+  update:
+    x-rate-limit: 10 requests per minute per account
+    x-credits: 2
+- target: $.paths['/deepcrawl'].post
+  update:
+    x-credits: 20
+- target: $.paths['/extract'].post
+  update:
+    x-credits: 10

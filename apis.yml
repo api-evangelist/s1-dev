@@ -1,23 +1,398 @@
 aid: s1-dev
 name: Search1API
-description: 'Search1API is a company surfaced via the API Evangelist harvest backlog (source: monid-connectors)
-  and added to the network as a stub for full-pipeline profiling.'
+description: Search1API is web access infrastructure for AI agents, operated by SuperAgents, LLC (Delaware). One
+  credit-metered REST API at api.search1api.com provides multi-engine web search (Google, Bing, DuckDuckGo, Yandex,
+  GitHub, arXiv, Reddit, X, Baidu and more), agentic search routed by the TypeSafe Jev model, news search, page
+  crawling, screenshots, sitemap discovery, trending topics, structured extraction and asynchronous deep crawls.
+  The same account reaches it through an OpenAPI 3.1 contract, official TypeScript and Python SDKs, the s1 CLI,
+  a hosted OAuth 2.1 MCP server at mcp.search1api.com, an Agent Skill, and pay-per-request MPP/x402 payment challenges.
 url: https://raw.githubusercontent.com/api-evangelist/s1-dev/refs/heads/main/apis.yml
 x-type: company
 x-source: harvest:monid-connectors
-x-tier: stub
-x-tier-reason: harvest
+x-tier: profiled
+x-tier-reason: enrichment pass 2026-10-07 (local-v5; was harvest)
 specificationVersion: '0.20'
 created: '2026-10-07'
 modified: '2026-10-07'
 tags:
 - Company
-apis: []
+- Search
+- Web Search
+- Crawling
+- Web Scraping
+- News
+- AI Agents
+- MCP
+- Agent Tools
+- Data Extraction
+- Screenshots
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+image: https://s1.dev/og-home-v2.png
 common:
+- type: AgentSkill
+  url: skills/_index.yml
+- type: AgenticAccess
+  url: agentic-access/s1-dev-agentic-access.yml
+- type: RateLimits
+  url: rate-limits/s1-dev-rate-limits.yml
+- type: Plans
+  url: plans/s1-dev-plans-pricing.yml
+- type: Spectral
+  url: rules/s1-dev-rules.yml
+- type: JSONLD
+  url: json-ld/s1-dev-context.jsonld
+- type: Vocabulary
+  url: vocabulary/s1-dev-vocabulary.yml
+- type: DataModel
+  url: data-model/s1-dev-data-model.yml
+- type: CLI
+  url: cli/s1-dev-cli.yml
+- type: ChangeLog
+  url: changelog/s1-dev-changelog.yml
+- type: Conventions
+  url: conventions/s1-dev-conventions.yml
+- type: Authentication
+  url: authentication/s1-dev-authentication.yml
+- type: OAuthScopes
+  url: scopes/s1-dev-scopes.yml
+- type: Deprecation
+  url: https://s1.dev/docs/changelog
+- type: Lifecycle
+  url: lifecycle/s1-dev-lifecycle.yml
+- type: ErrorCatalog
+  url: errors/s1-dev-problem-types.yml
+- type: Conformance
+  url: conformance/s1-dev-conformance.yml
+- type: Overlay
+  url: overlays/s1-dev-openapi-overlay.yaml
+- type: LLMsTxt
+  url: llms/s1-dev-llms.txt
+- type: ToolCrosswalk
+  url: mcp/s1-dev-tool-crosswalk.yml
+- type: MCPServer
+  url: mcp/s1-dev-mcp.yml
+- type: WellKnown
+  url: well-known/s1-dev-well-known.yml
+- type: Hosts
+  url: hosts/s1-dev-hosts.yml
+- type: Vendors
+  url: vendors/s1-dev-vendors.yml
+- type: SDKs
+  url: packages/s1-dev-packages.yml
+- type: Packages
+  url: packages/s1-dev-packages.yml
+- type: Sandbox
+  url: https://app.s1.dev/playground/ask
 - type: Website
   url: https://s1.dev
+- type: DeveloperPortal
+  url: https://s1.dev/docs
+- type: Documentation
+  url: https://s1.dev/docs
+- type: APIReference
+  url: https://s1.dev/docs/basic/search
+- type: GettingStarted
+  url: https://s1.dev/docs/get-started/quickstart
+- type: About
+  url: https://s1.dev/about
+- type: Support
+  url: https://s1.dev/contact
+- type: Blog
+  url: https://blog.s1.dev/
+- type: ChangeLog
+  url: https://s1.dev/docs/changelog
+- type: ChangeLog
+  name: Product changelog (blog)
+  url: https://blog.s1.dev/changelog
+- type: GitHubOrganization
+  url: https://github.com/superagents-lab
+- type: GitHubOrganization
+  name: Founder GitHub (linked from s1.dev)
+  url: https://github.com/fatwang2
+- type: Pricing
+  url: https://s1.dev/pricing
+- type: Login
+  url: https://app.s1.dev/
+- type: SignUp
+  url: https://app.s1.dev/sign-up
+- type: TermsOfService
+  url: https://blog.s1.dev/pages/terms
+- type: PrivacyPolicy
+  url: https://s1.dev/privacy
+- type: StatusPage
+  url: https://status.search1api.com/
+- type: DomainSecurity
+  url: security/s1-dev-domain-security.yml
+apis:
+- aid: s1-dev:search1api-mcp-server
+  name: Search1API MCP Server
+  description: >-
+    Official hosted Streamable HTTP MCP server exposing search, news, crawl, sitemap and trending tools
+    to any MCP client, with OAuth 2.1 (PKCE, dynamic client registration via clerk.s1.dev) or a Search1API
+    API key. Also published as the npm package search1api-mcp for local stdio use, and listed in the Claude
+    directory as a connector and a plugin.
+  humanURL: https://s1.dev/mcp-server
+  baseURL: https://mcp.search1api.com/mcp
+  tags:
+  - MCP
+  - AI Agents
+  - Search
+  properties:
+  - type: Documentation
+    url: https://s1.dev/docs/integrations/mcp
+  - type: MCPServerCard
+    name: MCP server card
+    url: https://s1.dev/.well-known/mcp/server-card.json
+  - type: SourceCode
+    url: https://github.com/superagents-lab/search1api-mcp
+- aid: s1-dev:search1api-blog-mcp-server
+  name: Search1API Blog MCP Server
+  description: >-
+    Secondary MCP server on the Search1API blog host exposing four read-only content tools (search_posts,
+    list_posts, get_post, list_tags); an anonymous tools/list answered with the tool schemas. Serves blog
+    content, not the search API.
+  humanURL: https://blog.s1.dev/
+  baseURL: https://blog.s1.dev/mcp
+  tags:
+  - MCP
+  - Blog
+  properties:
+  - type: Documentation
+    url: https://blog.s1.dev/llms.txt
+- aid: s1-dev:s1-dev-account-api
+  name: Search1API Account API
+  description: The Account API from Search1API — 1 operation(s) for account.
+  humanURL: https://s1.dev/docs
+  baseURL: https://api.search1api.com
+  tags:
+  - Account
+  properties:
+  - type: OpenAPI
+    url: openapi/s1-dev-account-api-openapi.yml
+  - type: Documentation
+    url: https://s1.dev/docs
+  - type: APIReference
+    url: https://s1.dev/docs/basic/search
+  - type: GettingStarted
+    url: https://s1.dev/docs/get-started/quickstart
+  - type: Authentication
+    url: https://s1.dev/docs/essentials/authentication
+  - type: RateLimits
+    url: https://s1.dev/docs/essentials/credits-and-limits
+  - type: ErrorCatalog
+    url: https://s1.dev/docs/essentials/error-handling
+  - type: ChangeLog
+    url: https://s1.dev/docs/changelog
+  - type: LLMsTxt
+    url: https://s1.dev/api/llms.txt
+  - type: JSONSchema
+    url: json-schema/s1-dev-ask-response-schema.json
+  - type: JSONSchema
+    url: json-schema/s1-dev-search-batch-response-schema.json
+  - type: JSONSchema
+    url: json-schema/s1-dev-news-batch-response-schema.json
+  - type: JSONSchema
+    url: json-schema/s1-dev-deepcrawl-status-response-schema.json
+  - type: JSONSchema
+    url: json-schema/s1-dev-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/s1-dev-news-response-schema.json
+- aid: s1-dev:s1-dev-crawl-api
+  name: Search1API Crawl API
+  description: The Crawl API from Search1API — 5 operation(s) for crawl.
+  humanURL: https://s1.dev/docs
+  baseURL: https://api.search1api.com
+  tags:
+  - Crawl
+  properties:
+  - type: OpenAPI
+    url: openapi/s1-dev-crawl-api-openapi.yml
+  - type: Documentation
+    url: https://s1.dev/docs
+  - type: APIReference
+    url: https://s1.dev/docs/basic/search
+  - type: GettingStarted
+    url: https://s1.dev/docs/get-started/quickstart
+  - type: Authentication
+    url: https://s1.dev/docs/essentials/authentication
+  - type: RateLimits
+    url: https://s1.dev/docs/essentials/credits-and-limits
+  - type: ErrorCatalog
+    url: https://s1.dev/docs/essentials/error-handling
+  - type: ChangeLog
+    url: https://s1.dev/docs/changelog
+  - type: LLMsTxt
+    url: https://s1.dev/api/llms.txt
+  - type: JSONSchema
+    url: json-schema/s1-dev-ask-response-schema.json
+  - type: JSONSchema
+    url: json-schema/s1-dev-search-batch-response-schema.json
+  - type: JSONSchema
+    url: json-schema/s1-dev-news-batch-response-schema.json
+  - type: JSONSchema
+    url: json-schema/s1-dev-deepcrawl-status-response-schema.json
+  - type: JSONSchema
+    url: json-schema/s1-dev-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/s1-dev-news-response-schema.json
+- aid: s1-dev:s1-dev-feedback-api
+  name: Search1API Feedback API
+  description: The Feedback API from Search1API — 1 operation(s) for feedback.
+  humanURL: https://s1.dev/docs
+  baseURL: https://api.search1api.com
+  tags:
+  - Feedback
+  properties:
+  - type: OpenAPI
+    url: openapi/s1-dev-feedback-api-openapi.yml
+  - type: Documentation
+    url: https://s1.dev/docs
+  - type: APIReference
+    url: https://s1.dev/docs/basic/search
+  - type: GettingStarted
+    url: https://s1.dev/docs/get-started/quickstart
+  - type: Authentication
+    url: https://s1.dev/docs/essentials/authentication
+  - type: RateLimits
+    url: https://s1.dev/docs/essentials/credits-and-limits
+  - type: ErrorCatalog
+    url: https://s1.dev/docs/essentials/error-handling
+  - type: ChangeLog
+    url: https://s1.dev/docs/changelog
+  - type: LLMsTxt
+    url: https://s1.dev/api/llms.txt
+  - type: JSONSchema
+    url: json-schema/s1-dev-ask-response-schema.json
+  - type: JSONSchema
+    url: json-schema/s1-dev-search-batch-response-schema.json
+  - type: JSONSchema
+    url: json-schema/s1-dev-news-batch-response-schema.json
+  - type: JSONSchema
+    url: json-schema/s1-dev-deepcrawl-status-response-schema.json
+  - type: JSONSchema
+    url: json-schema/s1-dev-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/s1-dev-news-response-schema.json
+- aid: s1-dev:s1-dev-screenshot-api
+  name: Search1API Screenshot API
+  description: The Screenshot API from Search1API — 1 operation(s) for screenshot.
+  humanURL: https://s1.dev/docs
+  baseURL: https://api.search1api.com
+  tags:
+  - Screenshot
+  properties:
+  - type: OpenAPI
+    url: openapi/s1-dev-screenshot-api-openapi.yml
+  - type: Documentation
+    url: https://s1.dev/docs
+  - type: APIReference
+    url: https://s1.dev/docs/basic/search
+  - type: GettingStarted
+    url: https://s1.dev/docs/get-started/quickstart
+  - type: Authentication
+    url: https://s1.dev/docs/essentials/authentication
+  - type: RateLimits
+    url: https://s1.dev/docs/essentials/credits-and-limits
+  - type: ErrorCatalog
+    url: https://s1.dev/docs/essentials/error-handling
+  - type: ChangeLog
+    url: https://s1.dev/docs/changelog
+  - type: LLMsTxt
+    url: https://s1.dev/api/llms.txt
+  - type: JSONSchema
+    url: json-schema/s1-dev-ask-response-schema.json
+  - type: JSONSchema
+    url: json-schema/s1-dev-search-batch-response-schema.json
+  - type: JSONSchema
+    url: json-schema/s1-dev-news-batch-response-schema.json
+  - type: JSONSchema
+    url: json-schema/s1-dev-deepcrawl-status-response-schema.json
+  - type: JSONSchema
+    url: json-schema/s1-dev-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/s1-dev-news-response-schema.json
+- aid: s1-dev:s1-dev-search-api
+  name: Search1API Search API
+  description: The Search API from Search1API — 4 operation(s) for search.
+  humanURL: https://s1.dev/docs
+  baseURL: https://api.search1api.com
+  tags:
+  - Search
+  properties:
+  - type: OpenAPI
+    url: openapi/s1-dev-search-api-openapi.yml
+  - type: Documentation
+    url: https://s1.dev/docs
+  - type: APIReference
+    url: https://s1.dev/docs/basic/search
+  - type: GettingStarted
+    url: https://s1.dev/docs/get-started/quickstart
+  - type: Authentication
+    url: https://s1.dev/docs/essentials/authentication
+  - type: RateLimits
+    url: https://s1.dev/docs/essentials/credits-and-limits
+  - type: ErrorCatalog
+    url: https://s1.dev/docs/essentials/error-handling
+  - type: ChangeLog
+    url: https://s1.dev/docs/changelog
+  - type: LLMsTxt
+    url: https://s1.dev/api/llms.txt
+  - type: JSONSchema
+    url: json-schema/s1-dev-ask-response-schema.json
+  - type: JSONSchema
+    url: json-schema/s1-dev-search-batch-response-schema.json
+  - type: JSONSchema
+    url: json-schema/s1-dev-news-batch-response-schema.json
+  - type: JSONSchema
+    url: json-schema/s1-dev-deepcrawl-status-response-schema.json
+  - type: JSONSchema
+    url: json-schema/s1-dev-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/s1-dev-news-response-schema.json
+- aid: s1-dev:s1-dev-system-api
+  name: Search1API System API
+  description: The System API from Search1API — 1 operation(s) for system.
+  humanURL: https://s1.dev/docs
+  baseURL: https://api.search1api.com
+  tags:
+  - System
+  properties:
+  - type: OpenAPI
+    url: openapi/s1-dev-system-api-openapi.yml
+  - type: Documentation
+    url: https://s1.dev/docs
+  - type: APIReference
+    url: https://s1.dev/docs/basic/search
+  - type: GettingStarted
+    url: https://s1.dev/docs/get-started/quickstart
+  - type: Authentication
+    url: https://s1.dev/docs/essentials/authentication
+  - type: RateLimits
+    url: https://s1.dev/docs/essentials/credits-and-limits
+  - type: ErrorCatalog
+    url: https://s1.dev/docs/essentials/error-handling
+  - type: ChangeLog
+    url: https://s1.dev/docs/changelog
+  - type: LLMsTxt
+    url: https://s1.dev/api/llms.txt
+  - type: JSONSchema
+    url: json-schema/s1-dev-ask-response-schema.json
+  - type: JSONSchema
+    url: json-schema/s1-dev-search-batch-response-schema.json
+  - type: JSONSchema
+    url: json-schema/s1-dev-news-batch-response-schema.json
+  - type: JSONSchema
+    url: json-schema/s1-dev-deepcrawl-status-response-schema.json
+  - type: JSONSchema
+    url: json-schema/s1-dev-search-response-schema.json
+  - type: JSONSchema
+    url: json-schema/s1-dev-news-response-schema.json
+x-enrichment:
+  date: '2026-10-07'
+  status: enriched
+  artifacts_added: 52
+  pass: local-v5

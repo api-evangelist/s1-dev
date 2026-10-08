@@ -1,0 +1,175 @@
+openapi: 3.2.0
+info:
+  title: S1 Dev Feedback API
+  version: 1.0.0
+  x-guidance: Search1API provides web search, news aggregation, URL crawling, webpage screenshots, sitemap extraction, trending topics, content extraction, and deep crawling. All paid endpoints accept POST with a JSON body. Use POST /search with a "query" field for web search. Use POST /news with a "query" field for news. Use POST /ask with a natural-language "query" to have Search1API choose the engines and time window and return only relevant results (API key only). Use POST /crawl with a "url" field to crawl a page. Use POST /screenshot with a "url" field to render a PNG, JPEG, or WebP image. Use POST /sitemap with a "url" field to extract sitemap URLs. Use POST /trending with a "search_service" field for trends. Use POST /extract with a "url" field for structured content extraction. Use POST /deepcrawl with a "url" field for deep multi-page crawling.
+  description: 'Operations tagged Feedback across 2 of this provider''s published API definitions: search1api-openapi.json, s1-dev-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.search1api.com
+tags:
+- name: Feedback
+paths:
+  /feedback:
+    post:
+      operationId: feedback
+      summary: Report a Search1API problem or feature request
+      description: 'Report a Search1API problem, missing capability, or confusing documentation encountered during a task. Only message is required. Optional request_id refers to the original problem request. Do not include credentials, personal data, or private user content. Reports are stored in Agent Feedback and linked to an opaque account reference. Do not report every empty result or retry the same report automatically; feedback should not block the main task. Returns 201 only after storage succeeds. Maximum JSON body size: 16 KiB. Limited to 10 submissions per account per minute at a Cloudflare location. Free to call.'
+      tags:
+      - Feedback
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeedbackResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '413':
+          description: Payload Too Large
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '415':
+          description: Unsupported Media Type
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '429':
+          description: Too Many Requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+        '503':
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+      security:
+      - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  minLength: 1
+                  maxLength: 4000
+                intent:
+                  type: string
+                  maxLength: 2000
+                category:
+                  type: string
+                  enum:
+                  - bug
+                  - feature_request
+                  - docs
+                  - other
+                  default: other
+                request_id:
+                  type: string
+                  maxLength: 256
+                agent:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      maxLength: 128
+                    model:
+                      type: string
+                      maxLength: 128
+                  additionalProperties: false
+              required:
+              - message
+              additionalProperties: false
+    servers:
+    - url: https://api.search1api.com
+components:
+  schemas:
+    FeedbackResponse:
+      type: object
+      required:
+      - id
+      - status
+      properties:
+        id:
+          type: string
+          pattern: ^fb_[a-zA-Z0-9_-]+$
+          maxLength: 80
+        status:
+          type: string
+          enum:
+          - new
+      additionalProperties: false
+    ApiError:
+      type: object
+      description: 'Search1API error. Every JSON error carries `ok: false`, `error` (a short status-derived label) and `message` (human-readable detail); validation failures add `errors`. Payment challenges may use RFC 9457 problem detail fields.'
+      properties:
+        ok:
+          type: boolean
+          enum:
+          - false
+        error:
+          type: string
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              message:
+                type: string
+              code:
+                type: string
+        type:
+          type: string
+          format: uri
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+      additionalProperties: true
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key
+x-refined-from:
+- search1api-openapi.json
+- s1-dev-openapi.yml
+x-discovery:
+  ownershipProofs: []

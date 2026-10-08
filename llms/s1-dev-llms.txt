@@ -1,0 +1,103 @@
+# Search1API Documentation
+
+> Search1API is web access infrastructure for AI agents. Use this index to discover the product overview, pricing, docs, agent interfaces, and machine-readable API specs.
+
+## Product
+- [Homepage](https://s1.dev/): Product overview for Search1API.
+- [Homepage Markdown](https://s1.dev/index.md): Agent-friendly overview of the product, interfaces, and endpoints.
+- [About Search1API](https://s1.dev/about): Product purpose, operator identity, and trust evidence.
+- [Contact Search1API](https://s1.dev/contact): Official private support channels and safe diagnostic guidance.
+- [Search1API Privacy](https://s1.dev/privacy): Readable privacy summary with a link to the controlling policy.
+- [Proxies](https://s1.dev/proxies): Compare fixed Static ISP proxies with rotating residential proxies for automation, account access, scraping, and regional testing.
+- [Pricing](https://s1.dev/pricing): Pricing page for the core APIs and agent interfaces.
+- [Web Search MCP Server](https://s1.dev/mcp-server): Hosted MCP server exposing five tools (search, news, crawl, sitemap, trending) to any MCP client. OAuth 2.1 or API key, with client configurations for Claude Code, Cursor, VS Code, Windsurf and Claude.ai.
+- [Agent Skill and CLI](https://s1.dev/agent-skills): The Search1API agent skill and `s1` CLI for terminal agents. The skill decides when to search, when to read a URL instead, and how deep to go.
+- [Open Source](https://s1.dev/open-source): Write-ups of Search1API open-source projects. A page appears here when there is more to explain than a GitHub README.
+- [Jev Search](https://s1.dev/open-source/jev-search): Open-source search UI. TypeSafe’s Jev chooses sources and ranks live results from Search1API. Hosted demo at jev.s1.dev. No generated answers.
+- [Agentic Search API](https://s1.dev/ask-api): `POST /ask`. A decision model (TypeSafe Jev today) detects intent, picks up to 5 of 12 engines, and reranks results by relevance. Flat 5 credits, no generated answers.
+- [Integrations](https://s1.dev/integrations): Directory of native integrations, grouped by coding agents, frameworks, automation, and apps.
+- [Claude](https://s1.dev/integrations/claude-code): Two published integrations: the Search1API connector for five web tools, and the plugin for the same tools plus an Agent Skill. Manual MCP and standalone Skills + CLI are secondary options.
+- [Codex](https://s1.dev/integrations/codex): Hosted MCP server via `codex mcp add --url`, with OAuth login or an API key in `config.toml`.
+- [Cursor](https://s1.dev/integrations/cursor): One-click install from the Cursor Directory, or the hosted endpoint in `mcp.json`.
+- [Hermes](https://s1.dev/integrations/hermes): Native Hermes Agent plugin — `hermes plugins install superagents-lab/hermes-search1api`.
+- [OpenClaw](https://s1.dev/integrations/openclaw): Native OpenClaw tools via ClawHub — `openclaw plugins install clawhub:@fatwang2/openclaw-search1api`.
+- [OpenCode](https://s1.dev/integrations/opencode): Native OpenCode tools — `opencode plugin opencode-search1api`.
+- [DeepSeek Harness](https://s1.dev/integrations/deepseek-harness): The `dsh-s1` plugin registers web access as first-class dsh tools, in-process.
+- [LangChain](https://s1.dev/integrations/langchain): The official `search1api-langchain` toolkit exposes search, news, and crawl as LangChain tools.
+- [Vercel](https://s1.dev/integrations/vercel): AI SDK tools for web research and Vercel Connect for authorized runtime access to Search1API.
+- [n8n](https://s1.dev/integrations/n8n): The `n8n-nodes-search1api` community node adds search, news, page retrieval, sitemap, and trending.
+- [LobeHub](https://s1.dev/integrations/lobehub): Built-in search provider and crawler for self-hosted LobeHub, configured with environment variables.
+- [Python Search API](https://s1.dev/python-search-api): Official `search1api` client for Python, with typed errors, retries, async support, and deepcrawl polling.
+- [Node.js Search API](https://s1.dev/nodejs-search-api): Official `@search1api/client` for Node.js and TypeScript, typed against the public OpenAPI contract.
+- [Pricing Markdown](https://s1.dev/pricing.md): Agent-friendly pricing, credits, and endpoint summary.
+- [Proxies Markdown](https://s1.dev/proxies.md): Agent-friendly proxy plans, IP tenancy, bandwidth, and pricing.
+
+## Claude directory
+- [Search1API connector](https://claude.ai/directory/search1api): Five remote MCP tools for Claude, connected with Search1API OAuth.
+- [Search1API Claude plugin](https://claude.ai/customize/plugins/id/c73feffb-aae4-49f4-8515-24322b313989%40anthropic-plugin-directory): Published MCP + Agent Skill bundle for Claude apps, Cowork, and Claude Code. Also discoverable in Customize → Plugins → Discover.
+
+## Documentation
+- [API Docs](https://s1.dev/docs): Public documentation entry point for the Search1API platform.
+- [Report product feedback](https://s1.dev/docs/utility/feedback): POST /feedback with a Search1API bearer credential and a message. Free; do not include private content or credentials.
+- [Search1API OpenAPI and llms.txt](https://s1.dev/docs/integrations/openapi): OpenAPI schema, code-generation guidance, and agent-readable indexes.
+- [Search1API MCP server guide](https://s1.dev/docs/integrations/mcp): Hosted Streamable HTTP endpoint, tool list, authentication, and client configuration.
+- [Search1API for Claude guide](https://s1.dev/docs/integrations/claude): Add the connector or install the plugin with the same five MCP tools plus an Agent Skill. Installation, Claude Code account sync, and manual alternatives.
+- [Search1API CLI guide](https://s1.dev/docs/integrations/cli): Installation, OAuth login, commands, flags, and JSON output for the official `s1` CLI.
+- [Official SDKs](https://s1.dev/docs/integrations/sdks): TypeScript and Python clients with typed responses, errors, retries, and deepcrawl polling.
+- [Vercel Integration Guide](https://s1.dev/docs/integrations/vercel): Compare AI SDK tools and Vercel Connect, with installation and runtime credential setup.
+- [Vercel AI SDK Guide](https://s1.dev/docs/integrations/vercel-ai-sdk): Configure Search1API tools for AI SDK agents and Next.js streaming routes.
+- [Search1API Agent Skill](https://s1.dev/docs/integrations/skills): Install and use the reusable Search1API skill in supported agent hosts.
+
+## Core APIs
+- [Search1API Overview](https://blog.s1.dev/posts/search-api): Overview of the Search1API API families and common use cases.
+- [Changelog](https://blog.s1.dev/changelog): Product and API updates.
+
+## Search engines
+Each engine is a `search_service` value on the same Search endpoint; the response shape is identical and the `snippet` contract differs per engine.
+- [Google Search API](https://s1.dev/google-search-api): Default engine. General web results, with optional page content in the same request.
+- [Bing Search API](https://s1.dev/bing-search-api): Bing web results after Microsoft retired its own Search API v7 on 2025-08-11.
+- [DuckDuckGo Search API](https://s1.dev/duckduckgo-search-api): A second general index for cross-checking a Google result set.
+- [Yahoo Search API](https://s1.dev/yahoo-search-api): Yahoo web results. Supplied by Bing under their search alliance, so expect heavy overlap.
+- [Yandex Search API](https://s1.dev/yandex-search-api): A third general index, especially Russian-language and CIS coverage. `published_date` is a UTC timestamp when `time_range` is set.
+- [GitHub Search API](https://s1.dev/github-search-api): Repositories, issues, pull requests, and discussions. Each result has `kind`; repos add `stars`/`language`, threads add `num_comments`.
+- [arXiv Search API](https://s1.dev/arxiv-search-api): Papers and preprints. Snippet is `authors | ISO date | abstract`.
+- [Reddit Search API](https://s1.dev/reddit-search-api): Posts and discussion. Snippet is `r/subreddit | /u/author | post text`.
+- [X Search API](https://s1.dev/x-search-api): Posts. Title carries the display name and `@handle`; snippet is the post text.
+- [YouTube Search API](https://s1.dev/youtube-search-api): Videos. Snippet is `channel | runtime | description`.
+- [Wikipedia Search API](https://s1.dev/wikipedia-search-api): Reference articles. Snippet is an extract from the article body.
+- [IMDb Search API](https://s1.dev/imdb-search-api): Films and television. Snippet is `Rank: N | year | top-billed cast`.
+- [WeChat Search API](https://s1.dev/wechat-search-api): Official Account articles. Snippet is `account name | date | excerpt`; article bodies via `crawl_results`.
+- [Bilibili Search API](https://s1.dev/bilibili-search-api): Chinese-language video. Snippet is `uploader | runtime | description`.
+- [Baidu Search API](https://s1.dev/baidu-search-api): Chinese web, including Baidu Baike and state media.
+- [Bing China Search API](https://s1.dev/bingcn-search-api): Bing’s Mainland China ranking, distinct from international `bing` and from `baidu`. Native `page` pagination.
+- [360 Search API](https://s1.dev/360-search-api): A second Chinese index, distinct from Baidu; useful for corroboration.
+- [Quark Search API](https://s1.dev/quark-search-api): A third Chinese index, leaning on Alibaba and UC content.
+
+## Crawl coverage
+Per-site pages for the Crawl endpoint. Support is measured per URL pattern; each page publishes the matrix verified against the live crawler, plus real request/response samples.
+- [LinkedIn Scraper API](https://s1.dev/linkedin-scraper-api): Public company pages, jobs, posts, articles, and public profiles to Markdown; login-walled URLs return AUTH_REQUIRED.
+- [Reddit Scraper API](https://s1.dev/reddit-scraper-api): Posts with comment threads, subreddit listings, and user activity feeds to Markdown via Reddit's public Atom feeds — no account or OAuth app.
+- [X Scraper API](https://s1.dev/x-scraper-api): Tweets, quote tweets, and long-form Articles to Markdown via public embed/syndication JSON — no X account needed.
+- [YouTube Scraper API](https://s1.dev/youtube-scraper-api): Watch/short URLs to timestamped transcripts and playlists to structured listings via the page's caption track — no Google account.
+- [GitHub Scraper API](https://s1.dev/github-scraper-api): Repo READMEs, blob file views, and raw.githubusercontent.com files to clean Markdown — no GitHub account.
+- [Stack Overflow Scraper API](https://s1.dev/stackoverflow-scraper-api): Questions with full answer threads via the public Stack Exchange API — covers stackoverflow.com plus *.stackexchange.com, Ask Ubuntu, Super User, Server Fault, MathOverflow.
+- [Hugging Face Scraper API](https://s1.dev/huggingface-scraper-api): Model and dataset cards to Markdown plus Space metadata via the public Hub API; gated repos return honest metadata-only results.
+- [WeChat Scraper API](https://s1.dev/wechat-scraper-api): Public official-account articles to Markdown with account, publish time, and image URLs — captcha hits return a named ANTI_BOT error.
+- [Hacker News Scraper API](https://s1.dev/hackernews-scraper-api): Stories with full comment trees, comment permalinks with reply subtrees, and front-page/ask listings via the public Algolia-hosted HN API.
+- [npm Scraper API](https://s1.dev/npm-scraper-api): Package pages — README, version, license, weekly downloads, dependency list — via the public registry.npmjs.org API; scoped and version-pinned URLs covered.
+- [PyPI Scraper API](https://s1.dev/pypi-scraper-api): Project pages — README, license, requires-python, requirements list — via the public pypi.org JSON API; pinned-release URLs covered.
+- [Bilibili Scraper API](https://s1.dev/bilibili-scraper-api): Video pages — title, description, publish time, engagement stats, and timestamped danmaku comments — via a dedicated parser; b23.tv short links resolve to the same card.
+- [CSDN Scraper API](https://s1.dev/csdn-scraper-api): Blog articles — full body text as Markdown — via cloudflare-fetch plus a dedicated parser; /article/details/ URLs verified.
+
+## Agent Interfaces
+- [Authentication for Agents](https://s1.dev/auth.md): OAuth 2.1 discovery, PKCE authorization, dynamic client registration, token refresh, and legacy API-key compatibility.
+- [MCP Endpoint](https://mcp.search1api.com/mcp): Remote MCP entry point for Search1API.
+- [Search1API CLI on npm](https://www.npmjs.com/package/search1api-cli): Official `s1` command-line interface for Search1API.
+- [Search1API CLI source](https://github.com/superagents-lab/search1api-cli): Source code, releases, and issues for the official CLI.
+- [Search1API Skills](https://github.com/superagents-lab/search1api-cli/tree/master/skills/search1api): Canonical reusable skills for agent environments.
+
+## Machine-readable Specs
+- [OpenAPI Specification](https://api.search1api.com/openapi.json): Public API schema for Search1API.
+- [REST API Index](https://s1.dev/api/llms.txt): Section-scoped index for agents that only need the HTTP API.
+- [Agentic Resource Catalog](https://s1.dev/.well-known/ai-catalog.json): ARD catalog of the MCP server, API schema, skill, and plugin manifest.
+- [MCP Server Card](https://s1.dev/.well-known/mcp/server-card.json): Pre-connection description of the hosted MCP server and its tools.

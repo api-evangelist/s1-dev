@@ -1,0 +1,42 @@
+generated: '2026-10-07'
+method: searched
+source: https://s1.dev/docs/changelog (Compatibility promise); https://s1.dev/docs/advanced/reasoning; https://status.search1api.com/
+versioning:
+  scheme: unversioned-additive
+  mechanism: No version number in URLs or headers; the HTTP contract only grows. New endpoints, optional request
+    fields, response fields, enum values and headers may appear without notice; unknown request fields are ignored;
+    existing fields are never renamed, retyped or moved.
+  docs: https://s1.dev/docs/changelog
+  notes: SDKs, CLI and MCP server follow semantic versioning and are listed on the same changelog page.
+deprecation:
+  policy_url: https://s1.dev/docs/changelog
+  changelog: https://s1.dev/docs/changelog
+  mechanism: Removals are announced on the changelog before they ship; a removed endpoint keeps answering 410 Gone
+    with a message naming its replacement.
+  sunset_header: false
+  deprecation_header: false
+  notes: Status-code semantics are part of the contract and changes are dated on the changelog (e.g. zero-result
+    searches moved from 404 to 200).
+status_page: https://status.search1api.com/
+status_page_platform: Better Stack (markup on the page)
+sla:
+  url: null
+  public_uptime_target: null
+  notes: No numeric uptime SLA found; the terms page links the status page.
+rate_limits: https://s1.dev/docs/essentials/credits-and-limits
+deprecated_operations:
+- path: POST /v1/chat/completions
+  status: discontinued
+  response: 410 Gone
+  evidence: https://s1.dev/docs/advanced/reasoning
+- path: GET /v1/models
+  status: discontinued
+  response: 410 Gone
+  evidence: https://s1.dev/docs/utility/models
+removed_parameters:
+- change: 'search_service: "sogou" removed from POST /search (422 on use)'
+  date: '2026-09-13'
+- change: POST /ask sources, time_range, max_results removed (accepted and ignored)
+  date: '2026-10-07'
+notes: 'The OpenAPI document carries no deprecated: true flags; the two discontinued endpoints were removed from
+  the contract rather than marked.'

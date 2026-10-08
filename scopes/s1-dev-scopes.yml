@@ -1,0 +1,12 @@
+generated: '2026-10-07'
+method: searched
+source: https://api.search1api.com/.well-known/oauth-protected-resource (scopes_supported); https://s1.dev/auth.md
+docs: https://s1.dev/auth.md
+description: 'OAuth 2.1 scopes advertised by the Search1API protected-resource metadata. Access is account-scoped
+  rather than permission-scoped: a token maps to the same user and credit balance as an API key.'
+authorization_server: https://clerk.s1.dev
+scopes:
+- name: openid
+  description: OpenID Connect identity of the authorizing Search1API account owner.
+- name: offline_access
+  description: 'Issues a refresh token; auth.md: "a refresh token is issued only when offline_access is requested".'

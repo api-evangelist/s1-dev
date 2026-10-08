@@ -1,0 +1,15 @@
+generated: '2026-10-07'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: s1.dev
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Dec 17 12:40:20 2026 GMT
+  hsts: false
+domains:
+- domain: s1.dev
+  dnssec: false
+  caa: []
+  spf: false
+  dmarc: false

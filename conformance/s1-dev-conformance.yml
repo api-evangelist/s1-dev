@@ -1,0 +1,66 @@
+generated: '2026-10-07'
+method: searched
+source: https://s1.dev/auth.md; https://s1.dev/docs/integrations/openapi; https://s1.dev/docs/integrations/mcp; live probes of the well-known
+  documents on 2026-10-07
+standards:
+- id: openapi-3.1
+  conforms: true
+  evidence: 'OpenAPI 3.1.0 document at https://api.search1api.com/openapi.json (openapi: "3.1.0", 13 operations); advertised by every API response
+    via Link: </openapi.json>; rel="service-desc"'
+- id: oauth2
+  conforms: true
+  evidence: OAuth 2.1 authorization code + PKCE (S256) for agents, MCP clients and CLI; issuer https://clerk.s1.dev (https://s1.dev/auth.md)
+- id: pkce-rfc7636
+  conforms: true
+  evidence: 'auth.md step 4: "Generate a PKCE verifier and an S256 code challenge"; code_challenge_methods_supported in https://clerk.s1.dev/.well-known/oauth-authorization-server'
+- id: rfc8414
+  conforms: true
+  evidence: Authorization-server metadata served at https://clerk.s1.dev/.well-known/oauth-authorization-server (200, issuer https://clerk.s1.dev)
+    and bridged at https://s1.dev/.well-known/oauth-authorization-server
+- id: rfc9728
+  conforms: true
+  evidence: 'Protected-resource metadata at https://api.search1api.com/.well-known/oauth-protected-resource and https://mcp.search1api.com/.well-known/oauth-protected-resource
+    (200, authorization_servers: [https://clerk.s1.dev]); auth.md: "Protected Search1API responses also advertise the metadata URL in the WWW-Authenticate
+    header defined by RFC 9728"'
+- id: rfc7591-dynamic-client-registration
+  conforms: true
+  evidence: 'auth.md: registration_methods_supported ["oauth_dynamic_client_registration"]; the s1 CLI "dynamically registers itself as a public
+    native client"'
+- id: oidc
+  conforms: true
+  evidence: https://clerk.s1.dev/.well-known/openid-configuration served (200); scopes_supported openid, offline_access
+- id: rfc9457
+  conforms: true
+  evidence: 402 payment challenge served as application/problem+json with type/title/status/detail (observed live on POST /search without credentials,
+    2026-10-07); OpenAPI 402 responses declare application/problem+json
+- id: mcp
+  conforms: true
+  evidence: Hosted Streamable HTTP MCP server at https://mcp.search1api.com/mcp with server card at https://s1.dev/.well-known/mcp/server-card.json;
+    docs claim protocol revision 2026-07-28
+- id: x402
+  conforms: true
+  evidence: 'info.description: "Supports pay-per-request via MPP and x402 protocols"; docs error-handling: "Search1API supports pay-per-request
+    payment protocols"'
+- id: mpp
+  conforms: true
+  evidence: 'WWW-Authenticate: Payment challenge (method="tempo", intent="charge") observed on an anonymous POST /search, 2026-10-07; info.description
+    names MPP'
+- id: llms-txt
+  conforms: true
+  evidence: https://s1.dev/llms.txt (200, 82 pages indexed), https://s1.dev/docs/llms.txt, https://s1.dev/llms-full.txt
+- id: rfc8288-link-relations
+  conforms: true
+  evidence: 'Link header on every API response: </openapi.json>; rel="service-desc", <https://s1.dev/docs>; rel="service-doc", </health>; rel="status"
+    (observed on GET /health)'
+- id: agent-skills
+  conforms: true
+  evidence: Agent Skill SKILL.md published at https://github.com/superagents-lab/search1api-cli/tree/master/skills/search1api and listed in https://s1.dev/.well-known/ai-catalog.json
+- id: idempotency-key
+  conforms: false
+  evidence: No Idempotency-Key header documented; docs say search, crawl and screenshot requests have no write-side effects (https://s1.dev/docs/essentials/error-handling)
+- id: rfc8594-sunset
+  conforms: false
+  evidence: No Sunset/Deprecation header documented; removals are announced on https://s1.dev/docs/changelog and answer 410 Gone
+- id: idempotency
+  conforms: false
+  evidence: no idempotency key parameter on mutating operations

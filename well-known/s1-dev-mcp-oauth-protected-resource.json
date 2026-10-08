@@ -1,0 +1,1 @@
+{"resource":"https://mcp.search1api.com/mcp","authorization_servers":["https://clerk.s1.dev"],"bearer_methods_supported":["header"],"resource_documentation":"https://s1.dev/auth.md"}

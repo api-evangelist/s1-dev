@@ -1,0 +1,72 @@
+generated: '2026-10-07'
+method: searched
+source: https://s1.dev/docs/essentials/error-handling; live anonymous POST https://api.search1api.com/search on
+  2026-10-07 (402 application/problem+json)
+format: json-envelope (ok/error/message/errors) with RFC 9457 application/problem+json on the 402 payment challenge
+envelope:
+  media_type: application/json
+  shape: '{ "ok": false, "error": "<label>", "message": "<human-readable>", "errors": [ { "field", "message", "code"
+    } ] }'
+  payment_challenge:
+    media_type: application/problem+json
+    shape: '{ "type": "https://paymentauth.org/problems/payment-required", "title": "Payment Required", "status":
+      402, "detail": "...", "challengeId": "..." }'
+    header: 'WWW-Authenticate: Payment id=... realm="api.search1api.com" method="tempo" intent="charge" ...'
+retry_policy: Retry 429, 502, 503, 504 and transient 500 with exponential backoff and jitter; do not retry 400,
+  401, 402 or 422 until the request or account state changes; do not retry a /crawl 404 or 410.
+charging: Failed requests are not charged; a zero-result search (200, empty results) and a /crawl confirmed dead
+  link (404/410) are charged as completed answers.
+problems:
+- status: 400
+  title: Bad Request
+  type: about:blank
+  description: Malformed JSON or an invalid request value handled outside schema validation
+  remediation: Fix the request body and headers.
+- status: 401
+  title: Unauthorized
+  type: about:blank
+  description: Invalid, revoked, or malformed bearer token
+  remediation: Check the key and the Authorization header.
+- status: 402
+  title: Payment Required
+  type: https://paymentauth.org/problems/payment-required
+  description: Payment challenge (no bearer token; pay-per-request via MPP/x402 protocols) or insufficient account
+    credits
+  remediation: Add a bearer token, complete the payment flow, or add credits. Check the balance with GET /usage.
+- status: 403
+  title: Forbidden
+  type: about:blank
+  description: Screenshot target failed URL safety or hostname-resolution checks
+  remediation: Use a public HTTP or HTTPS URL without credentials; verify public DNS resolves before retrying.
+- status: 404
+  title: Not Found
+  type: about:blank
+  description: A deepcrawl task was not found, or the /crawl target server confirmed the URL does not exist
+  remediation: For deepcrawl verify the task ID; for /crawl the dead link is a verified, completed (and charged)
+    answer - fix the URL, do not retry.
+- status: 410
+  title: Gone
+  type: about:blank
+  description: A discontinued reasoning endpoint, or the /crawl target server confirmed the URL was permanently
+    removed
+  remediation: Remove calls to /v1/chat/completions and /v1/models; for /crawl treat as a verified dead link.
+- status: 422
+  title: Unprocessable Entity
+  type: about:blank
+  description: Request body failed schema validation; response carries an errors array of {field, message, code}
+  remediation: Read the errors array and fix the named fields.
+- status: 429
+  title: Too Many Requests
+  type: about:blank
+  description: The endpoint's per-key rate limit was exceeded
+  remediation: Wait for the Retry-After interval (60), then retry.
+- status: 500
+  title: Internal Server Error
+  type: about:blank
+  description: An unexpected gateway or service error
+  remediation: Retry; contact support if it persists.
+- status: 502
+  title: Bad Gateway
+  type: about:blank
+  description: An upstream service failed or timed out; the request is not charged
+  remediation: Retry with backoff.

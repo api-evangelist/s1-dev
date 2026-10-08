@@ -1,0 +1,39 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://s1.dev/.well-known/api-catalog",
+      "item": [
+        {
+          "href": "https://api.search1api.com",
+          "title": "Search1API REST API",
+          "type": "application/json"
+        },
+        {
+          "href": "https://mcp.search1api.com/mcp",
+          "title": "Search1API MCP server"
+        }
+      ]
+    },
+    {
+      "anchor": "https://api.search1api.com",
+      "service-desc": [
+        {
+          "href": "https://api.search1api.com/openapi.json",
+          "type": "application/json"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://s1.dev/docs",
+          "type": "text/html"
+        }
+      ],
+      "status": [
+        {
+          "href": "https://api.search1api.com/health",
+          "type": "application/json"
+        }
+      ]
+    }
+  ]
+}

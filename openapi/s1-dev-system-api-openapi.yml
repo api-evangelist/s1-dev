@@ -1,0 +1,115 @@
+openapi: 3.2.0
+info:
+  title: S1 Dev System API
+  version: 1.0.0
+  x-guidance: Search1API provides web search, news aggregation, URL crawling, webpage screenshots, sitemap extraction, trending topics, content extraction, and deep crawling. All paid endpoints accept POST with a JSON body. Use POST /search with a "query" field for web search. Use POST /news with a "query" field for news. Use POST /ask with a natural-language "query" to have Search1API choose the engines and time window and return only relevant results (API key only). Use POST /crawl with a "url" field to crawl a page. Use POST /screenshot with a "url" field to render a PNG, JPEG, or WebP image. Use POST /sitemap with a "url" field to extract sitemap URLs. Use POST /trending with a "search_service" field for trends. Use POST /extract with a "url" field for structured content extraction. Use POST /deepcrawl with a "url" field for deep multi-page crawling.
+  description: 'Operations tagged System across 2 of this provider''s published API definitions: search1api-openapi.json, s1-dev-openapi.yml. Each path carries the servers of the definition it was published in.'
+servers:
+- url: https://api.search1api.com
+tags:
+- name: System
+paths:
+  /health:
+    get:
+      operationId: health
+      summary: Health check
+      description: Report whether the API is serving traffic. Takes no credentials, so use it for uptime and readiness checks — it will not tell you whether an API key is valid; call GET /usage for that. Free to call.
+      tags:
+      - System
+      x-codeSamples:
+      - id: js
+        lang: ts
+        label: TypeScript SDK
+        source: 'import { Search1API } from ''@search1api/client'';
+
+
+          const client = new Search1API();
+
+          const health = await client.health();
+
+
+          console.log(health);'
+      - id: python
+        lang: python
+        label: Python SDK
+        source: 'from search1api import Search1API
+
+
+          client = Search1API()
+
+          health = client.health()
+
+
+          print(health)'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+    servers:
+    - url: https://api.search1api.com
+components:
+  schemas:
+    ApiError:
+      type: object
+      description: 'Search1API error. Every JSON error carries `ok: false`, `error` (a short status-derived label) and `message` (human-readable detail); validation failures add `errors`. Payment challenges may use RFC 9457 problem detail fields.'
+      properties:
+        ok:
+          type: boolean
+          enum:
+          - false
+        error:
+          type: string
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              field:
+                type: string
+              message:
+                type: string
+              code:
+                type: string
+        type:
+          type: string
+          format: uri
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+      additionalProperties: true
+    HealthResponse:
+      type: object
+      required:
+      - status
+      properties:
+        status:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+        version:
+          type: string
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: API Key
+x-refined-from:
+- search1api-openapi.json
+- s1-dev-openapi.yml
+x-discovery:
+  ownershipProofs: []

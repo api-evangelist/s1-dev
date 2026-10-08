@@ -1,0 +1,132 @@
+generated: '2026-10-07'
+method: probed
+status: published
+source: https://s1.dev/docs/integrations/mcp; https://s1.dev/.well-known/s1-dev-mcp-server-card.json; anonymous POST tools/list
+  to https://mcp.search1api.com/mcp (401, OAuth challenge) on 2026-10-07
+description: Search1API operates an official hosted MCP server (Streamable HTTP) at https://mcp.search1api.com/mcp
+  exposing five tools (search, news, crawl, sitemap, trending) over OAuth 2.1 (PKCE + dynamic client registration
+  via clerk.s1.dev) or a Search1API API key. The same server ships as the npm package search1api-mcp for local stdio
+  use. Tool names and input schemas below are the ones the provider PUBLISHES in its MCP server card and docs table;
+  an anonymous tools/list was refused with 401 (0.6.1 restored authentication on every /mcp request), so no live
+  tool listing was observed.
+server:
+  name: search1api
+  transport: streamable-http
+  url: https://mcp.search1api.com/mcp
+  auth: 'oauth2 or api-key (Authorization: Bearer)'
+  protocol_revision_claimed: 2026-07-28 (docs); server card protocolVersion 2025-06-18
+  protected_resource: https://mcp.search1api.com/.well-known/oauth-protected-resource
+  authorization_server: https://clerk.s1.dev
+  server_card: well-known/s1-dev-mcp-server-card.json
+  version: 0.6.1
+local:
+  name: search1api-mcp
+  transport: stdio
+  install: npx -y search1api-mcp
+  env:
+  - SEARCH1API_KEY
+  source: https://github.com/superagents-lab/search1api-mcp
+  registry: https://www.npmjs.com/package/search1api-mcp
+  version: 0.6.1
+  published: '2026-09-03'
+deployment:
+  mode: both
+  endpoint: https://mcp.search1api.com/mcp
+  install: npx -y search1api-mcp
+  package: https://www.npmjs.com/package/search1api-mcp
+  auth: oauth
+  verified: probed
+  probe: gated
+  probe_detail: POST tools/list without credentials -> HTTP 401 {"jsonrpc":"2.0","error":{"code":-32001,"message":"Authentication
+    is required. Use OAuth 2.1 discovery or provide a Search1API API key as a Bearer token."}}
+  checked: '2026-10-07'
+tools:
+- name: search
+  description: Search the live public web when the user needs current information, sources, or research. Returns
+    citable results with id, title, URL, and text. Each result includes a URL that can be read in full.
+  inputs:
+  - query
+  - max_results
+  - search_service
+  - crawl_results
+  - include_sites
+  - exclude_sites
+  - time_range
+  required:
+  - query
+  source: https://s1.dev/.well-known/s1-dev-mcp-server-card.json
+- name: news
+  description: Search current news when the user asks about recent events, announcements, or coverage. Returns citable
+    article results with title, URL, snippet, and optional extracted text.
+  inputs:
+  - query
+  - max_results
+  - search_service
+  - crawl_results
+  - include_sites
+  - exclude_sites
+  - time_range
+  required:
+  - query
+  source: https://s1.dev/.well-known/s1-dev-mcp-server-card.json
+- name: crawl
+  description: Extract the readable title and full text from a public URL supplied by the user or returned by search.
+  inputs:
+  - url
+  required:
+  - url
+  source: https://s1.dev/.well-known/s1-dev-mcp-server-card.json
+- name: sitemap
+  description: Discover related public links from a page or domain when the user wants to explore a site's structure
+    or available pages.
+  inputs:
+  - url
+  required:
+  - url
+  source: https://s1.dev/.well-known/s1-dev-mcp-server-card.json
+- name: trending
+  description: List currently trending repositories or stories from GitHub or Hacker News when the user asks what
+    is popular now.
+  inputs:
+  - search_service
+  - max_results
+  required:
+  - search_service
+  source: https://s1.dev/.well-known/s1-dev-mcp-server-card.json
+tool_evidence:
+  l3: table
+  evidence_url: https://s1.dev/docs/integrations/mcp
+  note: Five-row Tool/What it does/Required table on the docs page, matching the server card; names are documented,
+    not observed from a live tools/list.
+directories:
+- https://claude.ai/directory/search1api
+- https://smithery.ai (listed per docs)
+- https://cursor.directory (Agent Plugins manifest plugin.json in repo)
+secondary_servers:
+- name: Search1API Blog MCP
+  url: https://blog.s1.dev/mcp
+  transport: streamable-http
+  verified: probed
+  note: Anonymous tools/list answered 200 with four read-only blog content tools; its protected-resource document
+    names https://blog.s1.dev/_emdash as authorization server for write scopes. A content server for the blog, not
+    the search API.
+  tools:
+  - name: search_posts
+    description: Search Search1API Blog posts by keyword. Returns matching posts with excerpts and URLs.
+    inputs:
+    - query
+    - limit
+  - name: list_posts
+    description: List Search1API Blog posts in reverse chronological order. Optionally filter by tag slug and paginate
+      with nextCursor.
+    inputs:
+    - limit
+    - cursor
+    - tag
+  - name: get_post
+    description: Get a single Search1API Blog post by slug, including plain-text body content.
+    inputs:
+    - slug
+  - name: list_tags
+    description: List all tags used on the Search1API Blog.
+    inputs: []

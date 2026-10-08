@@ -1,0 +1,84 @@
+generated: '2026-10-07'
+method: searched
+source: https://s1.dev/docs/changelog
+docs: https://s1.dev/docs/changelog
+product_changelog: https://blog.s1.dev/changelog
+description: Dated changelog of the Search1API HTTP contract and its first-party packages (tags API, SDK, CLI, MCP,
+  Integrations, Docs). Recent window only; the page carries a Current versions table for every package.
+versioning:
+  scheme: unversioned additive HTTP API; packages use semantic versioning
+  current:
+    '@search1api/client': 0.2.1
+    search1api (PyPI): 0.2.1
+    search1api-cli: 1.4.0
+    search1api-mcp: 0.6.1
+  detail: lifecycle/s1-dev-lifecycle.yml
+entries:
+- version: '2026-10-07'
+  date: '2026-10-07'
+  breaking: false
+  highlights:
+  - POST /search without search_service now searches Google (previously a merged mix of engines)
+  - POST /ask now takes only query; sources, time_range and max_results removed (still accepted, ignored)
+- version: '2026-10-06'
+  date: '2026-10-06'
+  breaking: false
+  highlights:
+  - 'POST /ask added: TypeSafe Jev routes a natural-language query to up to five engines and reranks'
+  - 'Docs: Ask reference page'
+- version: '2026-10-03'
+  date: '2026-10-03'
+  breaking: false
+  highlights:
+  - Search1API available in Claude as a connector and a plugin, both on the hosted MCP server
+- version: '2026-09-19'
+  date: '2026-09-19'
+  breaking: false
+  highlights:
+  - 'search_service: "yandex" added to POST /search; published_date when time_range is set'
+- version: '2026-09-18'
+  date: '2026-09-18'
+  breaking: false
+  highlights:
+  - GitHub search returns issues, PRs and discussions with kind; Hacker News news links to the discussion thread
+    with story_url, points, num_comments; Reddit re-ordering; published_date on /search and /news; x honors time_range
+    and language
+- version: '2026-09-17'
+  date: '2026-09-17'
+  breaking: false
+  highlights:
+  - hermes-search1api 0.1.0 published
+  - 'All error responses are JSON with ok: false, error and message'
+  - GET /deepcrawl/status/{taskId} returns 404 for unknown task
+  - POST /crawl accepts enable_fallback alias
+- version: '2026-09-13'
+  date: '2026-09-13'
+  breaking: true
+  highlights:
+  - 'search_service: "sogou" removed from POST /search; requests sending it now fail validation with 422'
+- version: '2026-09-12'
+  date: '2026-09-12'
+  breaking: false
+  highlights:
+  - page added to POST /search for native SERP pagination on bing, bingcn, baidu
+- version: '2026-09-11'
+  date: '2026-09-11'
+  breaking: false
+  highlights:
+  - 'search_service: "bingcn" added to POST /search'
+- version: '2026-09-03'
+  date: '2026-09-03'
+  breaking: false
+  highlights:
+  - search1api-mcp 0.6.1 restores authentication on every /mcp request
+- version: '2026-08-26'
+  date: '2026-08-26'
+  breaking: false
+  highlights:
+  - search1api-mcp 0.6.0 let discovery methods run without a credential (reverted in 0.6.1)
+- version: '2026-08-25'
+  date: '2026-08-25'
+  breaking: false
+  highlights:
+  - 'POST /sitemap with type: "sitemap" reads sitemap files'
+  - search1api-cli 1.4.0 adds s1 learn

@@ -1,0 +1,178 @@
+generated: '2026-10-07'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 12
+  own: 6
+  other_domain: 4
+  platform: 2
+  roles:
+  - api
+  - identity
+  - marketing
+  - other
+  - source
+  - status
+  - website
+hosts:
+- host: api.s1.dev
+  found_by:
+  - contract-discovery
+  types: []
+  serves: []
+  registrable_domain: s1.dev
+  role: api
+  relation: own
+- host: api.search1api.com
+  found_by:
+  - apis[]
+  - docs-index
+  - spec-found
+  - well-known
+  types: []
+  serves:
+  - api
+  - docs
+  - spec
+  platform: clerk.s1.dev
+  registrable_domain: search1api.com
+  role: api
+  relation: other-domain
+- host: app.s1.dev
+  found_by:
+  - pointer
+  - probed
+  - site-links
+  - contract-discovery
+  - well-known
+  types:
+  - Sandbox
+  - Login
+  - SignUp
+  serves: []
+  registrable_domain: s1.dev
+  role: identity
+  relation: own
+- host: blog.s1.dev
+  found_by:
+  - pointer
+  - apis[]
+  - probed
+  - site-links
+  - docs-index
+  - contract-discovery
+  - well-known
+  types:
+  - Blog
+  - ChangeLog
+  - TermsOfService
+  serves:
+  - api
+  - docs
+  registrable_domain: s1.dev
+  role: marketing
+  relation: own
+- host: claude.ai
+  found_by:
+  - docs-index
+  types: []
+  serves:
+  - docs
+  registrable_domain: claude.ai
+  role: other
+  relation: other-domain
+- host: clerk.s1.dev
+  found_by:
+  - vendor-detect
+  types: []
+  serves:
+  - identity
+  vendor: clerk
+  registrable_domain: s1.dev
+  role: other
+  relation: own
+- host: github.com
+  found_by:
+  - pointer
+  - docs-index
+  types:
+  - GitHubOrganization
+  serves:
+  - docs
+  registrable_domain: github.com
+  role: source
+  relation: platform
+- host: jev.s1.dev
+  found_by:
+  - probed
+  - site-links
+  - contract-discovery
+  - well-known
+  types: []
+  serves: []
+  registrable_domain: s1.dev
+  role: other
+  relation: own
+- host: mcp.search1api.com
+  found_by:
+  - apis[]
+  - docs-index
+  - well-known
+  types: []
+  serves:
+  - api
+  - docs
+  platform: clerk.s1.dev
+  registrable_domain: search1api.com
+  role: other
+  relation: other-domain
+- host: s1.dev
+  found_by:
+  - pointer
+  - apis[]
+  - probed
+  - docs-index
+  - contract-discovery
+  - well-known
+  - vendor-detect
+  types:
+  - Deprecation
+  - Website
+  - DeveloperPortal
+  - Documentation
+  - APIReference
+  - GettingStarted
+  - About
+  - Support
+  - ChangeLog
+  - Pricing
+  - PrivacyPolicy
+  serves:
+  - docs
+  - cdn
+  vendor: cloudflare
+  registrable_domain: s1.dev
+  role: website
+  relation: own
+- host: status.search1api.com
+  found_by:
+  - pointer
+  - vendor-detect
+  types:
+  - StatusPage
+  serves:
+  - status-page
+  vendor: betterstack
+  registrable_domain: search1api.com
+  role: status
+  relation: other-domain
+- host: www.npmjs.com
+  found_by:
+  - docs-index
+  types: []
+  serves:
+  - docs
+  registrable_domain: npmjs.com
+  role: other
+  relation: platform

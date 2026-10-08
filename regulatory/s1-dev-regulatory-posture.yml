@@ -1,0 +1,48 @@
+generated: '2026-10-07'
+method: searched
+source: well-known/, security/, lifecycle/ artifacts of this run; https://s1.dev/privacy; https://s1.dev/contact;
+  https://s1.dev/about; live probes of /accessibility, /legal/subprocessors, /legal/dpa, /security.txt on s1.dev
+  (all 404) on 2026-10-07
+description: Horizontal regulatory signals harvested from Search1API (SuperAgents, LLC, Delaware). Only the privacy-request
+  channel carries substance; no SBOM, accessibility conformance report, subprocessor list, DPA, transparency report,
+  data-residency statement or AI transparency page was found.
+operator:
+  legal_entity: SuperAgents, LLC
+  jurisdiction: Delaware, United States
+  source: https://s1.dev/about
+signals:
+  data_subject_request:
+    url: https://s1.dev/contact
+    section: For billing, privacy, and security
+    channel: email sys@search1api.com
+    note: An email channel for access, correction, deletion and restriction requests; no self-service portal or
+      stated SLA.
+    evidence:
+    - source: https://s1.dev/contact
+      http_status: 200
+      fetched: '2026-10-07'
+      quote: Privacy access, correction, deletion, or restriction requests should come from the account email when
+        possible so ownership can be verified.
+absent:
+- sbom
+- support_lifetime
+- accessibility_conformance
+- training_data_summary
+- ai_transparency
+- global_privacy_control
+- subprocessors
+- data_residency
+- incident_notification
+- age_assurance
+- notice_and_action
+- transparency_report
+- exit_assistance
+probed:
+- url: https://s1.dev/.well-known/security.txt
+  status: 404
+- url: https://s1.dev/acceptable-use
+  status: 404
+- url: https://s1.dev/privacy
+  status: 200
+- url: https://s1.dev/contact
+  status: 200

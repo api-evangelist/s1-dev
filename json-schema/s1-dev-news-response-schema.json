@@ -1,0 +1,161 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/s1-dev/main/json-schema/s1-dev-news-response-schema.json",
+  "title": "NewsResponse",
+  "x-generated": "2026-10-07",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/s1-dev-openapi.yml#/components/schemas/NewsResponse",
+  "type": "object",
+  "required": [
+    "searchParameters",
+    "results"
+  ],
+  "properties": {
+    "searchParameters": {
+      "$ref": "#/$defs/NewsParameters"
+    },
+    "results": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/SearchResult"
+      }
+    },
+    "images": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "format": "uri"
+      }
+    }
+  },
+  "$defs": {
+    "NewsParameters": {
+      "type": "object",
+      "properties": {
+        "query": {
+          "type": "string",
+          "minLength": 1
+        },
+        "search_service": {
+          "type": "string",
+          "enum": [
+            "google",
+            "bing",
+            "duckduckgo",
+            "yahoo",
+            "hackernews",
+            "",
+            "reuters"
+          ]
+        },
+        "max_results": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 50,
+          "default": 5
+        },
+        "crawl_results": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 50,
+          "default": 0
+        },
+        "image": {
+          "type": "boolean",
+          "default": false
+        },
+        "include_sites": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "exclude_sites": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
+        },
+        "language": {
+          "type": "string"
+        },
+        "time_range": {
+          "type": "string",
+          "enum": [
+            "day",
+            "week",
+            "month",
+            "year",
+            ""
+          ]
+        }
+      },
+      "required": [
+        "query"
+      ],
+      "additionalProperties": false
+    },
+    "SearchResult": {
+      "type": "object",
+      "required": [
+        "title",
+        "link",
+        "snippet"
+      ],
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "link": {
+          "type": "string",
+          "format": "uri"
+        },
+        "snippet": {
+          "type": "string"
+        },
+        "content": {
+          "type": "string"
+        },
+        "published_date": {
+          "type": "string",
+          "description": "When the page was published, as ISO 8601: `YYYY-MM-DD` when only the day is known (web search engines), or `YYYY-MM-DDTHH:MM:SSZ` in UTC when the source carries a time (x, reddit, github, arxiv, youtube, bilibili, wechat, news feeds). Omitted when the source exposes no date, so treat it as optional per result."
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "repo",
+            "issue",
+            "pr",
+            "discussion"
+          ],
+          "description": "What a `github` result is: a repository, an issue, a pull request, or a discussion. Only present for `search_service: \"github\"`."
+        },
+        "stars": {
+          "type": "integer",
+          "description": "Stargazer count of a `github` repository result (`kind: \"repo\"`)."
+        },
+        "language": {
+          "type": "string",
+          "description": "Primary language of a `github` repository result (`kind: \"repo\"`). Omitted when GitHub reports none."
+        },
+        "num_comments": {
+          "type": "integer",
+          "description": "Comment count on a `github` issue, pull request or discussion, or on a `hackernews` thread (POST /news)."
+        },
+        "story_url": {
+          "type": "string",
+          "format": "uri",
+          "description": "POST /news with `search_service: \"hackernews\"` only: the submitted article. `link` is the Hacker News discussion thread; `story_url` is empty for Ask HN / Show HN text posts."
+        },
+        "points": {
+          "type": "integer",
+          "description": "POST /news with `search_service: \"hackernews\"` only: upvotes on the thread."
+        }
+      },
+      "additionalProperties": true
+    }
+  }
+}

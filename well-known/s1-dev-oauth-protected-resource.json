@@ -1,0 +1,1 @@
+{"resource":"https://s1.dev","authorization_servers":["https://clerk.s1.dev"],"bearer_methods_supported":["header"],"scopes_supported":["openid","offline_access"],"resource_documentation":"https://s1.dev/auth.md","canonical_resource_metadata":"https://api.search1api.com/.well-known/oauth-protected-resource"}

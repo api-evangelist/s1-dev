@@ -1,0 +1,85 @@
+generated: '2026-10-07'
+method: derived
+source: well-known/s1-dev-mcp-server-card.json tools[] bound by name to openapi/s1-dev-openapi.yml operationIds; https://s1.dev/docs/integrations/mcp
+description: Binding of each Search1API MCP tool to the REST operation that backs it. The provider documents that
+  the hosted MCP server, CLI, SDKs and REST API share one account, billing and limits, and every tool name equals
+  an OpenAPI operationId.
+surfaces:
+  openapi: openapi/s1-dev-openapi.yml
+  mcp:
+    url: https://mcp.search1api.com/mcp
+    gated: true
+    note: tools/list requires OAuth or an API key (401 anonymously); tool list taken from the published server card
+  graphql: null
+crosswalk:
+- tool: search
+  category: search
+  rest:
+  - search
+  binding: POST /search (operationId search)
+  confidence: high
+  note: Tool input properties in the server card are a subset of the OpenAPI request schema for the same path.
+- tool: news
+  category: search
+  rest:
+  - news
+  binding: POST /news (operationId news)
+  confidence: high
+  note: Tool input properties in the server card are a subset of the OpenAPI request schema for the same path.
+- tool: crawl
+  category: retrieval
+  rest:
+  - crawl
+  binding: POST /crawl (operationId crawl)
+  confidence: high
+  note: Tool input properties in the server card are a subset of the OpenAPI request schema for the same path.
+- tool: sitemap
+  category: retrieval
+  rest:
+  - sitemap
+  binding: POST /sitemap (operationId sitemap)
+  confidence: high
+  note: Tool input properties in the server card are a subset of the OpenAPI request schema for the same path.
+- tool: trending
+  category: discovery
+  rest:
+  - trending
+  binding: POST /trending (operationId trending)
+  confidence: high
+  note: Tool input properties in the server card are a subset of the OpenAPI request schema for the same path.
+mcp_only:
+- tool: search_posts
+  reason: Served by the separate Search1API Blog MCP server at https://blog.s1.dev/mcp; reads blog content, no REST
+    operation in the API contract.
+- tool: list_posts
+  reason: Served by the separate Search1API Blog MCP server at https://blog.s1.dev/mcp; reads blog content, no REST
+    operation in the API contract.
+- tool: get_post
+  reason: Served by the separate Search1API Blog MCP server at https://blog.s1.dev/mcp; reads blog content, no REST
+    operation in the API contract.
+- tool: list_tags
+  reason: Served by the separate Search1API Blog MCP server at https://blog.s1.dev/mcp; reads blog content, no REST
+    operation in the API contract.
+rest_only:
+- operationId: ask
+  reason: Agentic search added 2026-10-06; not yet an MCP tool
+- operationId: screenshot
+  reason: Binary image response; not exposed as a tool
+- operationId: extract
+  reason: Beta structured extraction; not exposed
+- operationId: deepcrawl
+  reason: Asynchronous task start; not exposed
+- operationId: deepcrawlStatus
+  reason: Task polling; not exposed
+- operationId: feedback
+  reason: Feedback submission; not exposed
+- operationId: health
+  reason: Unauthenticated health check
+- operationId: usage
+  reason: Credit balance; CLI exposes it as s1 balance
+coverage:
+  mcp_tools: 5
+  mapped: 5
+  mcp_only: 4
+  rest_operations: 13
+  rest_only: 8

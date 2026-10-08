@@ -1,0 +1,35 @@
+generated: '2026-10-07'
+method: searched
+source: https://s1.dev/docs/essentials/credits-and-limits
+name: Search1API rate limits
+published: true
+limit_count: 3
+note: Limits are per account for bearer-authenticated requests billed to credits; different API keys on the same
+  account share them. Higher limits by contacting sys@search1api.com.
+limits:
+- name: Default per-account limit
+  limit_text: most endpoints allow 200 requests per minute per account
+  limit: 200
+  window: minute
+  scope: per-account
+- name: Screenshot rendering
+  limit_text: Screenshot rendering has a separate limit of 10 requests per minute per account
+  limit: 10
+  window: minute
+  scope: per-account
+  endpoint: POST /screenshot
+- name: Agentic search
+  limit_text: /ask a separate limit of 30 requests per minute per account
+  limit: 30
+  window: minute
+  scope: per-account
+  endpoint: POST /ask
+headers:
+- Retry-After
+exceeded_status: 429
+exceeded_text: 'A request above its endpoint limit returns 429 Too Many Requests with a Retry-After: 60 header.'
+timeouts:
+- text: Search and result-crawling operations can wait up to 20 seconds for an upstream service.
+- text: Screenshot requests accept a timeout_ms value from 1 to 30 seconds.
+- text: /ask can take up to 35 seconds.
+auto_topup_cap: Automatic top-ups are capped at three charges in any 24-hour window

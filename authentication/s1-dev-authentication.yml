@@ -1,0 +1,54 @@
+generated: '2026-10-07'
+method: searched
+source: https://s1.dev/docs/essentials/authentication; https://s1.dev/auth.md; https://clerk.s1.dev/.well-known/oauth-authorization-server;
+  openapi/s1-dev-openapi.yml
+docs: https://s1.dev/docs/essentials/authentication
+summary:
+  types:
+  - http
+  - oauth2
+  - payment-challenge
+  header: 'Authorization: Bearer <token-or-key>'
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: API Key
+  description: 'User-managed API key created in https://app.s1.dev, sent as Authorization: Bearer. The hosted MCP
+    server also accepts ?apiKey= for clients that cannot send headers (header wins).'
+  sources:
+  - openapi/s1-dev-openapi.yml
+- name: oauth2
+  type: oauth2
+  flows:
+    authorizationCode:
+      authorizationUrl: https://clerk.s1.dev/oauth/authorize
+      tokenUrl: https://clerk.s1.dev/oauth/token
+      refreshUrl: https://clerk.s1.dev/oauth/token
+      scopes:
+        openid: identity
+        offline_access: refresh token
+  issuer: https://clerk.s1.dev
+  registration_endpoint: https://clerk.s1.dev/oauth/register
+  revocation_endpoint: https://clerk.s1.dev/oauth/token/revoke
+  pkce:
+  - S256
+  grant_types:
+  - authorization_code
+  - refresh_token
+  - urn:ietf:params:oauth:grant-type:device_code
+  description: 'OAuth 2.1 for agents, OAuth-aware MCP clients and the s1 CLI: dynamic client registration, authorization
+    code + PKCE S256, refresh with offline_access. Discovery starts at the protected-resource metadata (RFC 9728)
+    of api.search1api.com or mcp.search1api.com.'
+  protected_resources:
+  - https://api.search1api.com
+  - https://mcp.search1api.com/mcp
+  sources:
+  - https://s1.dev/auth.md
+- name: paymentChallenge
+  type: payment
+  description: 'Pay-per-request: a call without a bearer token receives 402 application/problem+json with a WWW-Authenticate:
+    Payment challenge (MPP, method="tempo"); the spec names MPP and x402.'
+  sources:
+  - https://s1.dev/docs/essentials/error-handling
+  - live POST https://api.search1api.com/search 2026-10-07

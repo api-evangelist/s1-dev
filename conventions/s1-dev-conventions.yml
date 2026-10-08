@@ -1,0 +1,80 @@
+generated: '2026-10-07'
+method: searched
+source: https://s1.dev/docs/essentials/authentication; https://s1.dev/docs/essentials/credits-and-limits; https://s1.dev/docs/essentials/error-handling;
+  https://s1.dev/docs/changelog; openapi/s1-dev-openapi.yml
+description: 'Cross-cutting behaviour of the Search1API REST API: bearer auth (OAuth 2.1 token or API key), credit-metered
+  JSON-over-HTTPS POST endpoints, no URL versioning, JSON error envelope, 429 with Retry-After, and a 402 payment
+  challenge for pay-per-request callers.'
+base_url: https://api.search1api.com
+api_style: JSON over HTTPS; every data operation is a POST with a JSON body; /usage, /health and /deepcrawl/status/{taskId}
+  are GET
+authentication:
+  scheme: 'Authorization: Bearer <OAuth 2.1 access token or Search1API API key>'
+  oauth: OAuth 2.1 authorization code + PKCE with dynamic client registration via https://clerk.s1.dev (scopes openid,
+    offline_access)
+  pay_per_request: Without a bearer token a paid endpoint returns a 402 payment challenge (MPP / x402)
+  docs: https://s1.dev/docs/essentials/authentication
+  detail: authentication/s1-dev-authentication.yml
+idempotency:
+  coverage: none
+  supported: false
+  mechanism: null
+  note: No Idempotency-Key or replay-protection mechanism is documented. The surface is almost entirely query-shaped
+    (search, news, ask, crawl, screenshot, sitemap, trending, extract are declared free of write-side effects);
+    the two mutating operations, POST /deepcrawl (starts a billable 20-credit task) and POST /feedback, have no
+    idempotency key, so a retried POST /deepcrawl starts and bills a second task.
+  write_operations:
+  - deepcrawl
+  - feedback
+  docs: https://s1.dev/docs/essentials/error-handling
+reversibility:
+  status: none
+  note: 'No cancel, undo or refund operation exists in the contract: a started deepcrawl task cannot be cancelled
+    (only polled via deepcrawlStatus) and feedback cannot be withdrawn. Credits are deducted only when a request
+    completes successfully; failed requests are not charged. No reversal window is stated anywhere in the docs.'
+  surfaces:
+  - operation: deepcrawl
+    reversal: null
+    window: null
+  - operation: feedback
+    reversal: null
+    window: null
+dry_run_mode:
+  supported: false
+  note: No dry-run or test mode; the Free plan grants 100 credits without a card.
+pagination:
+  style: none
+  request_params:
+    max_results: 1-50 per request (search/news)
+    page: native SERP pagination on bing, bingcn and baidu only (added 2026-09-12)
+  docs: https://s1.dev/docs/basic/search
+batching: Search and news accept batch requests; items are charged individually and a failed item costs zero.
+async_operations:
+  operation: deepcrawl
+  pattern: POST /deepcrawl returns 202 Accepted with a taskId; poll GET /deepcrawl/status/{taskId} (free)
+metering:
+  unit: credits
+  docs: https://s1.dev/docs/essentials/credits-and-limits
+  balance: 'GET /usage returns {"usage": <credits remaining>}'
+  exhausted: 402 Payment Required replaces the success response when credits cannot cover a completed request
+request_id: A Search1API request ID is returned on responses and asked for in support requests (https://s1.dev/contact);
+  header name not documented.
+versioning:
+  scheme: unversioned additive contract
+  detail: lifecycle/s1-dev-lifecycle.yml
+naming: New request fields are snake_case (max_results, crawl_results, timeout_ms); a few older fields stay camelCase
+  (enableFallback, taskId, zipUrl) with snake_case aliases where it helps.
+error_envelope:
+  shape: '{ ok: false, error, message, errors[] }'
+  payment_challenge: application/problem+json (RFC 9457)
+  detail: errors/s1-dev-problem-types.yml
+rate_limit_signaling:
+  status: 429
+  headers:
+  - Retry-After
+  detail: rate-limits/s1-dev-rate-limits.yml
+discovery:
+  link_header: 'Link: </openapi.json>; rel="service-desc", <https://s1.dev/docs>; rel="service-doc", </health>;
+    rel="status"'
+  llms_txt: https://s1.dev/llms.txt
+  ai_catalog: https://s1.dev/.well-known/ai-catalog.json

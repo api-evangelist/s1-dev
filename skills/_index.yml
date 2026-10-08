@@ -1,0 +1,35 @@
+generated: '2026-10-07'
+method: generated
+source: Provider-published SKILL.md saved verbatim from https://raw.githubusercontent.com/superagents-lab/search1api-cli/master/skills/search1api/SKILL.md;
+  packaged skills generated from openapi/s1-dev-openapi.yml operationIds.
+skills:
+- file: s1-dev-search1api-cli-skill.md
+  name: search1api
+  provider_published: true
+  api: cli/s1-dev-cli.yml
+  source: https://github.com/superagents-lab/search1api-cli/tree/master/skills/search1api
+  operations: []
+- file: s1-dev-search-and-read.md
+  name: search-and-read
+  api: openapi/s1-dev-openapi.yml
+  operations:
+  - search
+  - crawl
+- file: s1-dev-news-briefing.md
+  name: news-briefing
+  api: openapi/s1-dev-openapi.yml
+  operations:
+  - news
+  - crawl
+- file: s1-dev-agentic-search.md
+  name: agentic-search
+  api: openapi/s1-dev-openapi.yml
+  operations:
+  - ask
+- file: s1-dev-deepcrawl-site.md
+  name: deepcrawl-site
+  api: openapi/s1-dev-openapi.yml
+  operations:
+  - deepcrawl
+  - deepcrawlStatus
+  - sitemap
