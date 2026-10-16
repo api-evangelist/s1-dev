@@ -1,0 +1,14 @@
+{
+  "repo": "s1-dev",
+  "feeds": [
+    {
+      "source": "https://blog.s1.dev/",
+      "feed_url": "https://blog.s1.dev/rss.xml",
+      "title": "",
+      "saved": 1,
+      "method": "discovered"
+    }
+  ],
+  "post_count": 1,
+  "fetched": "2026-10-10T13:15:00Z"
+}
