@@ -1,9 +1,9 @@
 openapi: 3.2.0
 info:
-  title: S1 Dev Crawl API
+  title: Search1 Crawl API
+  description: Web search, news, crawling, screenshot, and content extraction APIs for AI agents. Supports pay-per-request via MPP and x402 protocols.
   version: 1.0.0
   x-guidance: Search1API provides web search, news aggregation, URL crawling, webpage screenshots, sitemap extraction, trending topics, content extraction, and deep crawling. All paid endpoints accept POST with a JSON body. Use POST /search with a "query" field for web search. Use POST /news with a "query" field for news. Use POST /ask with a natural-language "query" to have Search1API choose the engines and time window and return only relevant results (API key only). Use POST /crawl with a "url" field to crawl a page. Use POST /screenshot with a "url" field to render a PNG, JPEG, or WebP image. Use POST /sitemap with a "url" field to extract sitemap URLs. Use POST /trending with a "search_service" field for trends. Use POST /extract with a "url" field for structured content extraction. Use POST /deepcrawl with a "url" field for deep multi-page crawling.
-  description: 'Operations tagged Crawl across 2 of this provider''s published API definitions: search1api-openapi.json, s1-dev-openapi.yml. Each path carries the servers of the definition it was published in.'
 servers:
 - url: https://api.search1api.com
 tags:
@@ -146,8 +146,6 @@ paths:
                   - url
                   additionalProperties: false
                 minItems: 1
-    servers:
-    - url: https://api.search1api.com
   /sitemap:
     post:
       operationId: sitemap
@@ -254,8 +252,6 @@ paths:
               required:
               - url
               additionalProperties: false
-    servers:
-    - url: https://api.search1api.com
   /extract:
     post:
       operationId: extract
@@ -346,8 +342,6 @@ paths:
               required:
               - url
               additionalProperties: false
-    servers:
-    - url: https://api.search1api.com
   /deepcrawl:
     post:
       operationId: deepcrawl
@@ -446,8 +440,6 @@ paths:
               required:
               - url
               additionalProperties: false
-    servers:
-    - url: https://api.search1api.com
   /deepcrawl/status/{taskId}:
     get:
       operationId: deepcrawlStatus
@@ -520,20 +512,41 @@ paths:
         schema:
           type: string
           minLength: 1
-    servers:
-    - url: https://api.search1api.com
 components:
   schemas:
-    SitemapResponse:
+    ApiError:
       type: object
-      required:
-      - links
+      description: 'Search1API error. Every JSON error carries `ok: false`, `error` (a short status-derived label) and `message` (human-readable detail); validation failures add `errors`. Payment challenges may use RFC 9457 problem detail fields.'
       properties:
-        links:
+        ok:
+          type: boolean
+          enum:
+          - false
+        error:
+          type: string
+        message:
+          type: string
+        errors:
           type: array
           items:
-            type: string
-            format: uri
+            type: object
+            properties:
+              field:
+                type: string
+              message:
+                type: string
+              code:
+                type: string
+        type:
+          type: string
+          format: uri
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+      additionalProperties: true
     ExtractResponse:
       type: object
       required:
@@ -586,24 +599,6 @@ components:
           - 'null'
           format: uri
       additionalProperties: true
-    CrawlResult:
-      type: object
-      required:
-      - title
-      - link
-      - content
-      properties:
-        title:
-          type: string
-        link:
-          type: string
-          format: uri
-        content:
-          type: string
-        metadata:
-          type: object
-          additionalProperties: true
-      additionalProperties: true
     CrawlResponse:
       type: object
       required:
@@ -632,46 +627,38 @@ components:
           type: string
           enum:
           - queued
-    ApiError:
+    SitemapResponse:
       type: object
-      description: 'Search1API error. Every JSON error carries `ok: false`, `error` (a short status-derived label) and `message` (human-readable detail); validation failures add `errors`. Payment challenges may use RFC 9457 problem detail fields.'
+      required:
+      - links
       properties:
-        ok:
-          type: boolean
-          enum:
-          - false
-        error:
-          type: string
-        message:
-          type: string
-        errors:
+        links:
           type: array
           items:
-            type: object
-            properties:
-              field:
-                type: string
-              message:
-                type: string
-              code:
-                type: string
-        type:
-          type: string
-          format: uri
+            type: string
+            format: uri
+    CrawlResult:
+      type: object
+      required:
+      - title
+      - link
+      - content
+      properties:
         title:
           type: string
-        status:
-          type: integer
-        detail:
+        link:
           type: string
+          format: uri
+        content:
+          type: string
+        metadata:
+          type: object
+          additionalProperties: true
       additionalProperties: true
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
       bearerFormat: API Key
-x-refined-from:
-- search1api-openapi.json
-- s1-dev-openapi.yml
 x-discovery:
   ownershipProofs: []
