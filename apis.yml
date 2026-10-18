@@ -283,6 +283,8 @@ apis:
   humanURL: https://s1.dev/docs
   baseURL: https://api.search1api.com
   tags:
+  - Screenshots
+  tags_raw:
   - Screenshot
   properties:
   - type: OpenAPI
